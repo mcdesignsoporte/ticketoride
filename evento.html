@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ticketoride | Detalle del evento</title>
-  <meta name="description" content="Frontend premium de boletera preparado para conectar con WordPress." />
+  <title>Ticketoride | Festival Live Night 2026</title>
+  <meta name="description" content="Compra boletos para Festival Live Night 2026 en Ticketoride." />
   <link rel="stylesheet" href="css/style.css" />
-  
 </head>
 <body data-page="event">
   <header class="site-header">
@@ -18,95 +17,245 @@
           <span class="brand-tag">Boletos para vivir la experiencia</span>
         </div>
       </a>
+
       <nav class="menu">
         <a href="index.html">Inicio</a>
         <a href="eventos.html">Eventos</a>
         <a href="mis-boletos.html">Mis boletos</a>
-        <a href="scanner.html">Scanner</a>
+        <a href="scanner.html">Acceso</a>
         <a href="panel.html">Panel</a>
       </nav>
     </div>
   </header>
 
-  
-<main>
-  <section class="event-hero">
-    <div class="container">
-      <div class="crumbs"><a href="index.html">Inicio</a><span>/</span><a href="eventos.html">Eventos</a><span>/</span><span class="event-title">Evento</span></div>
+  <main>
+    <section class="event-hero">
+      <div class="container">
+        <div class="crumbs">
+          <a href="index.html">Inicio</a>
+          <span>/</span>
+          <a href="eventos.html">Eventos</a>
+          <span>/</span>
+          <span>Festival Live Night 2026</span>
+        </div>
 
-      <div class="event-layout">
-        <div id="eventHeroPanel" class="event-hero-panel cover-live-night">
-          <div class="event-hero-panel-content">
-            <span class="small-tag">Detalle del evento</span>
-            <h1 class="event-title">Festival Live Night 2026</h1>
-            <p class="event-summary">Descripción del evento</p>
-            <div class="event-meta-inline">
-              <span class="event-date-label">20 Mar 2026</span>
-              <span class="event-time-label">8:00 PM</span>
-              <span class="event-city">San Luis Potosí, MX · Arena Open Stage</span>
+        <div class="event-layout">
+          <div class="event-hero-panel cover-live-night">
+            <div class="event-hero-panel-content">
+              <span class="small-tag">Evento destacado</span>
+              <h1 class="event-title">Festival Live Night 2026</h1>
+              <p class="event-summary">
+                Vive una experiencia única con música en vivo, ambiente premium y una compra
+                de boletos clara, rápida y segura desde cualquier dispositivo.
+              </p>
+
+              <div class="event-meta-inline">
+                <span class="event-date-label">20 Mar 2026</span>
+                <span class="event-time-label">8:00 PM</span>
+                <span class="event-city">San Luis Potosí, MX · Arena Open Stage</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="quick-buy-card">
+            <span class="section-kicker red" style="margin-bottom:14px;">Compra rápida</span>
+            <h3 style="margin-top:0;">Selecciona tu acceso</h3>
+            <p class="muted" style="margin-bottom:18px;">
+              Elige tu zona y completa tu compra en pocos pasos.
+            </p>
+
+            <div class="feature-card" style="margin-bottom:12px;">
+              <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+                <div>
+                  <strong>General</strong>
+                  <p style="margin:6px 0 0;color:var(--muted);">Acceso estándar</p>
+                </div>
+                <strong>$450 MXN</strong>
+              </div>
+            </div>
+
+            <div class="feature-card" style="margin-bottom:12px;">
+              <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+                <div>
+                  <strong>Preferente</strong>
+                  <p style="margin:6px 0 0;color:var(--muted);">Mejor ubicación</p>
+                </div>
+                <strong>$850 MXN</strong>
+              </div>
+            </div>
+
+            <div class="feature-card" style="margin-bottom:18px;">
+              <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+                <div>
+                  <strong>VIP</strong>
+                  <p style="margin:6px 0 0;color:var(--muted);">Zona exclusiva</p>
+                </div>
+                <strong>$1,250 MXN</strong>
+              </div>
+            </div>
+
+            <div style="margin-bottom:18px;">
+              <label for="cantidad" style="display:block;font-weight:700;margin-bottom:8px;">Cantidad</label>
+              <input
+                id="cantidad"
+                type="number"
+                value="1"
+                min="1"
+                max="10"
+                style="width:100%;min-height:46px;border:1px solid #dbe2ea;border-radius:12px;padding:0 14px;font-size:16px;"
+              />
+            </div>
+
+            <div class="feature-card" style="margin-bottom:18px;background:#fff8f8;border-color:#ffd9d9;">
+              <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+                <span>Total desde</span>
+                <strong>$450 MXN</strong>
+              </div>
+            </div>
+
+            <div class="row-actions" style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a href="checkout.html" class="btn btn-primary">Comprar ahora</a>
+              <a href="#zonas" class="btn btn-secondary">Ver zonas</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="zonas" class="section">
+      <div class="container">
+        <div class="section-head left">
+          <span class="section-kicker red">Selección de zonas</span>
+          <h2>Escoge la experiencia que quieres vivir</h2>
+          <p>
+            Consulta categorías de acceso, beneficios y precios en una vista más clara
+            y profesional para el usuario.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>General</h3>
+            <p>Acceso estándar con flujo de compra rápido y precio accesible para el público general.</p>
+            <p><strong>Precio:</strong> $450 MXN</p>
+            <a href="checkout.html" class="btn btn-secondary">Seleccionar</a>
+          </article>
+
+          <article class="feature-card">
+            <h3>Preferente</h3>
+            <p>Una mejor ubicación para quienes buscan una experiencia más cómoda y destacada.</p>
+            <p><strong>Precio:</strong> $850 MXN</p>
+            <a href="checkout.html" class="btn btn-primary">Seleccionar</a>
+          </article>
+
+          <article class="feature-card">
+            <h3>VIP</h3>
+            <p>Zona exclusiva para una experiencia premium con mayor cercanía y mejor percepción de valor.</p>
+            <p><strong>Precio:</strong> $1,250 MXN</p>
+            <a href="checkout.html" class="btn btn-secondary">Seleccionar</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container split-grid">
+        <div class="map-card">
+          <h2 style="margin-top:0;">Mapa visual de recinto</h2>
+          <p class="muted">
+            Visualiza rápidamente las zonas disponibles y el tipo de acceso para cada categoría.
+          </p>
+
+          <div class="venue-map" style="padding:24px;">
+            <div style="display:grid;gap:14px;">
+              <div style="background:#ffe8a3;border-radius:16px;padding:18px;text-align:center;font-weight:700;">
+                VIP
+              </div>
+              <div style="background:#ffd1d1;border-radius:16px;padding:18px;text-align:center;font-weight:700;">
+                Preferente
+              </div>
+              <div style="background:#d9e7ff;border-radius:16px;padding:18px;text-align:center;font-weight:700;">
+                General
+              </div>
+              <div style="background:#1f2937;color:#fff;border-radius:16px;padding:16px;text-align:center;font-weight:700;">
+                Escenario
+              </div>
             </div>
           </div>
         </div>
 
-        <aside class="quick-buy-card">
-          <div id="eventQuickBuy"></div>
-        </aside>
-      </div>
-    </div>
-  </section>
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>Acceso digital</h3>
+            <p>Boletos listos para mostrarse desde el celular y agilizar el ingreso al evento.</p>
+          </div>
 
-  <section id="zonas" class="section">
-    <div class="container">
-      <div class="section-head left">
-        <span class="section-kicker red">Selección de zonas</span>
-        <h2>Escoge una categoría y lleva el flujo al checkout</h2>
-        <p>En WordPress esto puede terminar conectado con WooCommerce, productos variables o lógica de disponibilidad por zona/asiento.</p>
-      </div>
-      <div id="zonesGrid" class="feature-grid"></div>
-    </div>
-  </section>
+          <div class="info-card">
+            <h3>Políticas del evento</h3>
+            <p>Espacio ideal para informar restricciones, lineamientos y condiciones de acceso.</p>
+          </div>
 
-  <section class="section alt">
-    <div class="container split-grid">
-      <div class="map-card">
-        <h2 style="margin-top:0">Mapa visual de recinto</h2>
-        <p class="muted">Demo visual para selección por zonas. Después se puede convertir a mapa real o asientos numerados.</p>
-        <div id="venueMap" class="venue-map"></div>
-      </div>
-      <div class="info-grid">
-        <div class="info-card">
-          <h3>Accesos</h3>
-          <p>Listo para conectar con QR, listas de acceso, validación y reportes de ingreso.</p>
-        </div>
-        <div class="info-card">
-          <h3>Políticas</h3>
-          <p>Espacio para reembolsos, edad mínima, objetos permitidos y lineamientos del evento.</p>
-        </div>
-        <div class="info-card">
-          <h3>Promotor</h3>
-          <p>Área ideal para branding del organizador, patrocinadores y datos de contacto.</p>
+          <div class="info-card">
+            <h3>Experiencia del asistente</h3>
+            <p>Una mejor presentación ayuda a dar confianza y mejora la intención de compra.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section dark">
-    <div class="container">
-      <div class="section-head left">
-        <span class="section-kicker">Preguntas frecuentes</span>
-        <h2>Reducir dudas mejora la conversión</h2>
-        <p>Una buena boletera también resuelve objeciones antes de que el usuario abandone el checkout.</p>
+    <section class="section dark">
+      <div class="container">
+        <div class="section-head left">
+          <span class="section-kicker">Preguntas frecuentes</span>
+          <h2>Resuelve dudas antes de que el usuario abandone la compra</h2>
+          <p>
+            Una buena presentación no solo vende mejor, también ayuda a reducir fricción
+            en el proceso de compra.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>¿Cuándo recibo mis boletos?</h3>
+            <p>Una vez completada la compra, los boletos digitales quedan disponibles para consulta y acceso rápido.</p>
+          </article>
+
+          <article class="feature-card">
+            <h3>¿Puedo entrar con mi boleto en celular?</h3>
+            <p>Sí, el acceso digital está pensado para mostrarse directamente desde tu dispositivo móvil.</p>
+          </article>
+
+          <article class="feature-card">
+            <h3>¿Puedo elegir otra zona?</h3>
+            <p>Sí, puedes revisar las distintas categorías y seleccionar la experiencia que mejor se adapte a ti.</p>
+          </article>
+        </div>
       </div>
-      <div id="faqGrid" class="feature-grid"></div>
-    </div>
-  </section>
-</main>
+    </section>
 
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2 style="margin:0 0 10px;">Vive Festival Live Night 2026 con Ticketoride</h2>
+            <p style="margin:0;color:var(--muted);max-width:760px;">
+              Selecciona tu acceso, realiza tu compra y recibe tus boletos digitales de forma rápida y segura.
+            </p>
+          </div>
+
+          <div class="row-actions">
+            <a class="btn btn-primary" href="checkout.html">Comprar boletos</a>
+            <a class="btn btn-secondary" href="eventos.html">Ver más eventos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="container footer-wrap">
-      <p>© 2026 Ticketoride · Frontend premium listo para conectar con WordPress</p>
-      <p><a href="wordpress/integration-guide.md">Guía de integración WP</a></p>
+      <p>© 2026 Ticketoride</p>
+      <p>Powered by <strong>MC Creative Studio</strong> · 444 794 7990</p>
     </div>
   </footer>
 
