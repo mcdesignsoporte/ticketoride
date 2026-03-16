@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ticketoride | Mis boletos</title>
-  <meta name="description" content="Frontend premium de boletera preparado para conectar con WordPress." />
+  <meta name="description" content="Consulta tus boletos digitales en Ticketoride." />
   <link rel="stylesheet" href="css/style.css" />
-  
 </head>
 <body data-page="tickets">
   <header class="site-header">
@@ -18,35 +17,174 @@
           <span class="brand-tag">Boletos para vivir la experiencia</span>
         </div>
       </a>
+
       <nav class="menu">
         <a href="index.html">Inicio</a>
         <a href="eventos.html">Eventos</a>
         <a href="mis-boletos.html">Mis boletos</a>
-        <a href="scanner.html">Scanner</a>
+        <a href="scanner.html">Acceso</a>
         <a href="panel.html">Panel</a>
       </nav>
     </div>
   </header>
 
-  
-<main>
-  <section class="section alt" style="padding-top:48px">
-    <div class="container">
-      <div class="section-head left">
-        <span class="section-kicker red">Cartera digital</span>
-        <h2 id="ticketsTitle">Mis boletos</h2>
-        <p>Aquí vive el boleto digital después de la compra. El QR actual es visual demo y puede reemplazarse por QR real desde el backend.</p>
-      </div>
-      <div id="ticketsWrap" class="glass-stack"></div>
-    </div>
-  </section>
-</main>
+  <main>
+    <section class="section alt" style="padding-top:48px">
+      <div class="container">
+        <div class="section-head left">
+          <span class="section-kicker red">Cartera digital</span>
+          <h2>Mis boletos</h2>
+          <p>
+            Aquí puedes consultar tus accesos digitales, revisar los datos de tu evento
+            y mostrar tu boleto al momento de ingresar.
+          </p>
+        </div>
 
+        <div class="glass-stack">
+          <article class="feature-card" style="padding:28px;">
+            <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+              <div style="flex:1;min-width:260px;">
+                <span class="section-kicker red" style="margin-bottom:14px;">Boleto activo</span>
+                <h3 style="margin-top:0;">Festival Live Night 2026</h3>
+                <p class="muted" style="margin-bottom:18px;">
+                  San Luis Potosí, MX · Arena Open Stage
+                </p>
+
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Fecha</h3>
+                    <p style="margin:0;">20 Mar 2026</p>
+                  </div>
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Hora</h3>
+                    <p style="margin:0;">8:00 PM</p>
+                  </div>
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Zona</h3>
+                    <p style="margin:0;">General</p>
+                  </div>
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Folio</h3>
+                    <p style="margin:0;">TTR-2026-000184</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="width:220px;max-width:100%;">
+                <div class="feature-card" style="padding:20px;text-align:center;background:#fff8f8;border-color:#ffd8d8;">
+                  <div style="width:140px;height:140px;margin:0 auto 14px;border-radius:16px;background:
+                    linear-gradient(90deg,#111 10%,#fff 10%,#fff 20%,#111 20%,#111 30%,#fff 30%,#fff 40%,#111 40%,#111 50%,#fff 50%,#fff 60%,#111 60%,#111 70%,#fff 70%,#fff 80%,#111 80%,#111 90%,#fff 90%);
+                    border:1px solid #e5e7eb;">
+                  </div>
+                  <strong style="display:block;margin-bottom:6px;">QR de acceso</strong>
+                  <p style="margin:0;color:var(--muted);font-size:14px;">
+                    Presenta este boleto al ingreso del evento.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature-card" style="padding:28px;">
+            <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap;">
+              <div style="flex:1;min-width:260px;">
+                <span class="section-kicker red" style="margin-bottom:14px;">Boleto próximo</span>
+                <h3 style="margin-top:0;">Electro Wave Tour</h3>
+                <p class="muted" style="margin-bottom:18px;">
+                  San Luis Potosí, MX · Foro Central
+                </p>
+
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Fecha</h3>
+                    <p style="margin:0;">15 Abr 2026</p>
+                  </div>
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Hora</h3>
+                    <p style="margin:0;">9:00 PM</p>
+                  </div>
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Zona</h3>
+                    <p style="margin:0;">Preferente</p>
+                  </div>
+                  <div class="info-card">
+                    <h3 style="margin-bottom:6px;">Folio</h3>
+                    <p style="margin:0;">TTR-2026-000231</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="width:220px;max-width:100%;">
+                <div class="feature-card" style="padding:20px;text-align:center;">
+                  <div style="width:140px;height:140px;margin:0 auto 14px;border-radius:16px;background:
+                    linear-gradient(90deg,#111 10%,#fff 10%,#fff 20%,#111 20%,#111 30%,#fff 30%,#fff 40%,#111 40%,#111 50%,#fff 50%,#fff 60%,#111 60%,#111 70%,#fff 70%,#fff 80%,#111 80%,#111 90%,#fff 90%);
+                    border:1px solid #e5e7eb;">
+                  </div>
+                  <strong style="display:block;margin-bottom:6px;">Boleto digital</strong>
+                  <p style="margin:0;color:var(--muted);font-size:14px;">
+                    Disponible para acceso rápido desde tu celular.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark">
+      <div class="container">
+        <div class="section-head left">
+          <span class="section-kicker">Acceso digital</span>
+          <h2>Tus boletos siempre disponibles</h2>
+          <p>
+            Una cartera digital bien presentada mejora la experiencia del usuario
+            y facilita el ingreso al evento de forma más rápida y ordenada.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Acceso inmediato</h3>
+            <p>El usuario puede abrir su boleto desde el celular sin buscar correos o archivos externos.</p>
+          </article>
+
+          <article class="feature-card">
+            <h3>Mejor organización</h3>
+            <p>Todos los tickets se concentran en una sola vista con datos claros del evento.</p>
+          </article>
+
+          <article class="feature-card">
+            <h3>Experiencia más profesional</h3>
+            <p>Una cartera visual sólida transmite más confianza antes y durante el acceso.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-band">
+          <div>
+            <h2 style="margin:0 0 10px;">Tus experiencias, siempre a la mano</h2>
+            <p style="margin:0;color:var(--muted);max-width:760px;">
+              Consulta tus boletos digitales, revisa tus eventos próximos y prepárate para ingresar de forma rápida.
+            </p>
+          </div>
+
+          <div class="row-actions">
+            <a class="btn btn-primary" href="eventos.html">Comprar más boletos</a>
+            <a class="btn btn-secondary" href="scanner.html">Ver acceso</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="container footer-wrap">
-      <p>© 2026 Ticketoride · Frontend premium listo para conectar con WordPress</p>
-      <p><a href="wordpress/integration-guide.md">Guía de integración WP</a></p>
+      <p>© 2026 Ticketoride</p>
+      <p>Powered by <strong>MC Creative Studio</strong> · 444 794 7990</p>
     </div>
   </footer>
 
