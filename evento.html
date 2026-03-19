@@ -61,7 +61,7 @@
             <div class="summary-item"><span>Total</span><strong id="selectedTotal">$0 MXN</strong></div>
           </div>
 
-          <div class="note">Nomenclatura demo: <strong>P A1</strong>, <strong>MEZ B4</strong>, <strong>BAL C10</strong>.</div>
+          <div class="note">Nomenclatura demo: <strong>P A1</strong>, <strong>P B12</strong>, <strong>MEZ C8</strong>, <strong>BAL F20</strong>.</div>
           <div class="split-actions">
             <button id="continueCheckout" class="btn btn-primary full">Continuar al checkout</button>
             <button id="clearSelection" class="btn btn-secondary full">Limpiar selección</button>
@@ -74,24 +74,82 @@
       <div class="container">
         <div class="section-header">
           <div>
-            <span class="kicker">Layout del recinto</span>
-            <h2 style="margin-top:0;">Selecciona la sección y luego la butaca</h2>
-            <p class="muted">Disponible, apartado demo, vendido demo y seleccionado en tiempo real dentro de la simulación.</p>
+            <span class="kicker">Layout premium</span>
+            <h2 style="margin-top:0;">Mapa interactivo estilo boletera profesional</h2>
+            <p class="muted">Vista general del recinto + vista detallada curvada por sección, con zoom, hover y selección de butacas.</p>
           </div>
         </div>
 
-        <div class="seat-shell">
-          <div class="venue-overview" id="overviewCards"></div>
-          <div class="stage">ESCENARIO</div>
-          <div class="section-tabs" id="sectionTabs"></div>
-          <div id="sectionMeta" class="summary-list"></div>
-          <div id="seatMap" class="seat-map"></div>
-          <div class="legend">
-            <div class="legend-item"><span class="legend-dot dot-available"></span>Disponible</div>
-            <div class="legend-item"><span class="legend-dot dot-selected"></span>Seleccionado</div>
-            <div class="legend-item"><span class="legend-dot dot-held"></span>Apartado demo</div>
-            <div class="legend-item"><span class="legend-dot dot-sold"></span>Vendido demo</div>
+        <div class="tm-layout-shell">
+          <div class="layout-main-pro">
+            <div class="layout-toolbar-pro">
+              <div class="view-switch">
+                <button id="viewOverviewBtn" class="view-btn is-active" type="button">Vista general</button>
+                <button id="viewDetailBtn" class="view-btn" type="button">Vista por butacas</button>
+              </div>
+              <div class="zoom-wrap">
+                <button id="zoomOut" class="zoom-btn" type="button">−</button>
+                <input id="zoomRange" class="zoom-range" type="range" min="0.85" max="1.7" step="0.05" value="1" />
+                <button id="zoomIn" class="zoom-btn" type="button">＋</button>
+                <button id="zoomReset" class="btn btn-secondary btn-compact" type="button">Centrar</button>
+              </div>
+            </div>
+
+            <div class="section-tabs pro-tabs" id="sectionTabs"></div>
+
+            <div class="layout-canvas-pro">
+              <div id="overviewView" class="layout-view-pro is-visible">
+                <div id="overviewMap" class="overview-map"></div>
+              </div>
+
+              <div id="detailView" class="layout-view-pro">
+                <div class="detail-stage-pro">
+                  <div class="stage-lights"></div>
+                  <span>ESCENARIO</span>
+                  <small>Teatro de la Paz · Vista del público</small>
+                </div>
+                <div class="detail-viewport-pro">
+                  <div id="detailScene" class="detail-scene-pro" style="transform:scale(1);">
+                    <svg id="guideSvg" class="guide-svg" viewBox="0 0 1000 900" preserveAspectRatio="xMidYMid meet"></svg>
+                    <div id="rowLabels" class="row-label-layer"></div>
+                    <div id="seatMap" class="seat-map-pro"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <aside class="layout-sidebar-pro">
+            <div class="sidebar-card-pro">
+              <span class="kicker">Recinto</span>
+              <h3>Teatro de la Paz</h3>
+              <p class="muted">Haz clic sobre una sección en la vista general o cambia de vista para seleccionar butacas en la forma curva del recinto.</p>
+            </div>
+
+            <div class="sidebar-card-pro">
+              <span class="kicker">Sección activa</span>
+              <div id="activeSectionHero"></div>
+            </div>
+
+            <div class="sidebar-card-pro">
+              <span class="kicker">Detalles</span>
+              <div id="sectionMeta" class="summary-stack"></div>
+              <div class="legend legend-pro">
+                <div class="legend-item"><span class="legend-dot dot-available"></span>Disponible</div>
+                <div class="legend-item"><span class="legend-dot dot-selected"></span>Seleccionado</div>
+                <div class="legend-item"><span class="legend-dot dot-held"></span>Apartado demo</div>
+                <div class="legend-item"><span class="legend-dot dot-sold"></span>Vendido demo</div>
+              </div>
+            </div>
+
+            <div class="sidebar-card-pro">
+              <span class="kicker">Butaca enfocada</span>
+              <div id="hoverSeatCard" class="hover-seat-card">
+                <strong>Sin selección puntual</strong>
+                <p>Mueve el cursor sobre una butaca para ver fila, número, zona, precio y estado.</p>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

@@ -186,162 +186,393 @@
   }
 
   function renderEvent() {
-    const page = document.body.dataset.page;
-    if (page !== "event") return;
-    const event = findEvent(slugParam());
-    if (!event) return;
+  const page = document.body.dataset.page;
+  if (page !== "event") return;
+  const event = findEvent(slugParam());
+  if (!event) return;
 
-    $("#eventHeroTag").textContent = event.heroTag;
-    $("#eventTitle").textContent = event.title;
-    $("#eventSummary").textContent = event.summary;
-    $("#eventDate").textContent = event.dateLabel;
-    $("#eventTime").textContent = event.time;
-    $("#eventVenue").textContent = `${event.city} · ${event.venue}`;
-    renderSectionCards(event);
+  $("#eventHeroTag").textContent = event.heroTag;
+  $("#eventTitle").textContent = event.title;
+  $("#eventSummary").textContent = event.summary;
+  $("#eventDate").textContent = event.dateLabel;
+  $("#eventTime").textContent = event.time;
+  $("#eventVenue").textContent = `${event.city} · ${event.venue}`;
+  renderSectionCards(event);
 
-    let activeSection = event.sections[0];
-    let selectedSeats = [];
+  let activeSection = event.sections[0];
+  let selectedSeats = [];
+  let currentView = "overview";
+  let currentZoom = 1;
 
-    const tabs = $("#sectionTabs");
-    const map = $("#seatMap");
-    const meta = $("#sectionMeta");
-    const activeSectionName = $("#activeSectionName");
-    const activeSectionPrice = $("#activeSectionPrice");
-    const selectedCount = $("#selectedCount");
-    const selectedTotal = $("#selectedTotal");
-    const selectedPills = $("#selectedPills");
+  const tabs = $("#sectionTabs");
+  const map = $("#seatMap");
+  const meta = $("#sectionMeta");
+  const overviewMap = $("#overviewMap");
+  const guideSvg = $("#guideSvg");
+  const rowLabels = $("#rowLabels");
+  const activeSectionHero = $("#activeSectionHero");
+  const hoverSeatCard = $("#hoverSeatCard");
+  const detailScene = $("#detailScene");
+  const overviewView = $("#overviewView");
+  const detailView = $("#detailView");
+  const viewOverviewBtn = $("#viewOverviewBtn");
+  const viewDetailBtn = $("#viewDetailBtn");
+  const zoomRange = $("#zoomRange");
 
-    function updateSummary() {
-      if (activeSectionName) activeSectionName.textContent = activeSection.name;
-      if (activeSectionPrice) activeSectionPrice.textContent = formatMXN(activeSection.price);
-      if (selectedCount) selectedCount.textContent = selectedSeats.length.toString();
-      if (selectedTotal) selectedTotal.textContent = formatMXN(activeSection.price * selectedSeats.length);
-      if (selectedPills) {
-        selectedPills.innerHTML = selectedSeats.length
-          ? selectedSeats.map(seat => `<span class="selection-pill">${seat.label}</span>`).join("")
-          : `<span class="selection-pill">Sin asientos seleccionados</span>`;
+  const activeSectionName = $("#activeSectionName");
+  const activeSectionPrice = $("#activeSectionPrice");
+  const selectedCount = $("#selectedCount");
+  const selectedTotal = $("#selectedTotal");
+  const selectedPills = $("#selectedPills");
+
+  const geometry = {
+    PB: { centerX: 500, centerY: 900, frontRadius: 730, rowGap: 42, spreadStart: 72, spreadStep: 4.8, seatClass: "pb-seat" },
+    MEZ: { centerX: 500, centerY: 900, frontRadius: 675, rowGap: 40, spreadStart: 64, spreadStep: 4.6, seatClass: "mez-seat" },
+    BAL: { centerX: 500, centerY: 900, frontRadius: 630, rowGap: 42, spreadStart: 58, spreadStep: 4.2, seatClass: "bal-seat" }
+  };
+
+  function statusLabel(status) {
+    if (status === "selected") return "Seleccionado";
+    if (status === "held") return "Apartado demo";
+    if (status === "sold") return "Vendido demo";
+    return "Disponible";
+  }
+
+  function statusClass(status) {
+    if (status === "selected") return "status-selected";
+    if (status === "held") return "status-held";
+    if (status === "sold") return "status-sold";
+    return "status-available";
+  }
+
+  function getTotalSeats(section) {
+    return section.rows.reduce((acc, row) => acc + row.seats, 0);
+  }
+
+  function getSectionCounts(section) {
+    return section.rows.reduce((acc, row) => {
+      for (let i = 1; i <= row.seats; i += 1) {
+        const code = seatCode(section, row.row, i);
+        const status = getSeatStatus(event, code);
+        if (status === "sold") acc.sold += 1;
+        if (status === "held") acc.held += 1;
       }
-      if (meta) {
-        const totalSeats = activeSection.rows.reduce((acc, row) => acc + row.seats, 0);
-        const soldCount = activeSection.rows.reduce((acc, row) => {
-          let count = 0;
-          for (let i = 1; i <= row.seats; i += 1) {
-            if (getSeatStatus(event, seatCode(activeSection, row.row, i)) === "sold") count += 1;
-          }
-          return acc + count;
-        }, 0);
-        meta.innerHTML = `
-          <div class="summary-item"><span>Sección</span><strong>${activeSection.name}</strong></div>
-          <div class="summary-item"><span>Precio</span><strong>${formatMXN(activeSection.price)}</strong></div>
-          <div class="summary-item"><span>Butacas demo</span><strong>${totalSeats}</strong></div>
-          <div class="summary-item"><span>Vendidas/ocupadas</span><strong>${soldCount}</strong></div>
-        `;
-      }
+      return acc;
+    }, { sold: 0, held: 0 });
+  }
+
+  function toPoint(cx, cy, radius, degrees) {
+    const radians = degrees * (Math.PI / 180);
+    return {
+      x: cx + Math.cos(radians) * radius,
+      y: cy + Math.sin(radians) * radius
+    };
+  }
+
+  function getRowSpread(section, rowIndex) {
+    const conf = geometry[section.id] || geometry.PB;
+    return conf.spreadStart + (rowIndex * conf.spreadStep);
+  }
+
+  function getRowRadius(section, rowIndex) {
+    const conf = geometry[section.id] || geometry.PB;
+    return conf.frontRadius - (rowIndex * conf.rowGap);
+  }
+
+  function seatAngles(section, rowIndex, totalSeats) {
+    const spread = getRowSpread(section, rowIndex);
+    const start = 270 - (spread / 2);
+    const end = 270 + (spread / 2);
+    const aisleGap = totalSeats >= 18 ? 3.2 : totalSeats >= 12 ? 2.4 : 0;
+
+    if (!aisleGap || totalSeats < 4) {
+      return Array.from({ length: totalSeats }, (_, index) => {
+        if (totalSeats === 1) return 270;
+        return start + ((end - start) * index) / (totalSeats - 1);
+      });
     }
 
-    function renderTabs() {
-      tabs.innerHTML = event.sections.map(section => `
-        <button class="section-tab ${section.id === activeSection.id ? "is-active" : ""}" data-section="${section.id}">
-          ${section.name} · ${formatMXN(section.price)}
-        </button>
-      `).join("");
-      $$(".section-tab", tabs).forEach(btn => {
-        btn.addEventListener("click", () => {
-          activeSection = event.sections.find(section => section.id === btn.dataset.section) || activeSection;
-          selectedSeats = [];
-          renderTabs();
-          renderSeatMap();
-          updateSummary();
-        });
-      });
-      $$(".overview-card", $("#overviewCards") || document).forEach(btn => {
-        btn.addEventListener("click", () => {
-          activeSection = event.sections.find(section => section.id === btn.dataset.overview) || activeSection;
-          selectedSeats = [];
-          renderTabs();
-          renderSeatMap();
-          updateSummary();
-        });
-      });
+    const leftCount = Math.ceil(totalSeats / 2);
+    const rightCount = totalSeats - leftCount;
+    const leftEnd = 270 - aisleGap;
+    const rightStart = 270 + aisleGap;
+    const angles = [];
+
+    for (let i = 0; i < leftCount; i += 1) {
+      angles.push(leftCount === 1 ? start : start + ((leftEnd - start) * i) / (leftCount - 1));
+    }
+    for (let i = 0; i < rightCount; i += 1) {
+      angles.push(rightCount === 1 ? end : rightStart + ((end - rightStart) * i) / (rightCount - 1));
+    }
+    return angles;
+  }
+
+  function renderHoverCard(section, row, number, label, status) {
+    if (!hoverSeatCard) return;
+    hoverSeatCard.innerHTML = `
+      <strong>${label}</strong>
+      <p>${section.name} · Fila ${row} · Butaca ${number}</p>
+      <div class="hover-meta">
+        <span>Precio: ${formatMXN(section.price)}</span>
+        <span>Código: ${seatCode(section, row, number)}</span>
+      </div>
+      <span class="hover-status ${statusClass(status)}">${statusLabel(status)}</span>
+    `;
+  }
+
+  function updateSummary() {
+    if (activeSectionName) activeSectionName.textContent = activeSection.name;
+    if (activeSectionPrice) activeSectionPrice.textContent = formatMXN(activeSection.price);
+    if (selectedCount) selectedCount.textContent = selectedSeats.length.toString();
+    if (selectedTotal) selectedTotal.textContent = formatMXN(activeSection.price * selectedSeats.length);
+    if (selectedPills) {
+      selectedPills.innerHTML = selectedSeats.length
+        ? selectedSeats.map(seat => `<span class="selection-pill">${seat.label}</span>`).join("")
+        : `<span class="selection-pill">Sin asientos seleccionados</span>`;
     }
 
-    function renderSeatMap() {
-      map.innerHTML = activeSection.rows.map(row => {
-        const seatsHtml = Array.from({ length: row.seats }, (_, index) => {
-          const number = index + 1;
-          const code = seatCode(activeSection, row.row, number);
-          const label = sectionSeatLabel(activeSection, row.row, number);
-          const status = getSeatStatus(event, code);
-          const isSelected = selectedSeats.some(item => item.code === code);
-          const finalStatus = isSelected ? "selected" : status;
-          const disabled = status !== "available" ? "disabled" : "";
-          return `<button class="seat ${finalStatus}" data-code="${code}" data-label="${label}" data-row="${row.row}" data-number="${number}" ${disabled}>${number}</button>`;
-        }).join("");
-        return `
-          <div class="seat-row">
-            <div class="row-label">${row.row}</div>
-            <div class="row-seats">${seatsHtml}</div>
-            <div class="row-label">${row.row}</div>
+    const counts = getSectionCounts(activeSection);
+    const totalSeats = getTotalSeats(activeSection);
+    if (meta) {
+      meta.innerHTML = `
+        <div class="summary-item"><span>Sección</span><strong>${activeSection.name}</strong></div>
+        <div class="summary-item"><span>Precio</span><strong>${formatMXN(activeSection.price)}</strong></div>
+        <div class="summary-item"><span>Filas</span><strong>${activeSection.rows[0].row} - ${activeSection.rows[activeSection.rows.length - 1].row}</strong></div>
+        <div class="summary-item"><span>Butacas demo</span><strong>${totalSeats}</strong></div>
+        <div class="summary-item"><span>Vendidas</span><strong>${counts.sold}</strong></div>
+        <div class="summary-item"><span>Apartadas</span><strong>${counts.held}</strong></div>
+      `;
+    }
+
+    if (activeSectionHero) {
+      activeSectionHero.innerHTML = `
+        <div class="section-hero-card ${activeSection.colorClass}">
+          <strong>${activeSection.name}</strong>
+          <small>${activeSection.description}</small>
+          <div class="hero-price">${formatMXN(activeSection.price)}</div>
+          <div class="hero-mini">
+            <span>${activeSection.id}</span>
+            <span>${getTotalSeats(activeSection)} butacas</span>
+            <span>${counts.sold} vendidas</span>
           </div>
-        `;
-      }).join("");
-
-      $$(".seat.available, .seat.selected", map).forEach(btn => {
-        btn.addEventListener("click", () => {
-          const code = btn.dataset.code;
-          const label = btn.dataset.label;
-          const row = btn.dataset.row;
-          const number = Number(btn.dataset.number);
-          const exists = selectedSeats.find(item => item.code === code);
-          if (exists) {
-            selectedSeats = selectedSeats.filter(item => item.code !== code);
-          } else {
-            if (selectedSeats.length >= 8) {
-              alert("La simulación permite hasta 8 butacas por compra.");
-              return;
-            }
-            selectedSeats.push({ code, label, row, number, sectionId: activeSection.id, sectionName: activeSection.name });
-            selectedSeats.sort((a, b) => a.row.localeCompare(b.row) || a.number - b.number);
-          }
-          renderSeatMap();
-          updateSummary();
-        });
-      });
+        </div>
+      `;
     }
+  }
 
-    $("#continueCheckout")?.addEventListener("click", () => {
-      if (!selectedSeats.length) {
-        alert("Selecciona al menos una butaca para continuar.");
-        return;
-      }
-      storage.setCart({
-        eventSlug: event.slug,
-        eventTitle: event.title,
-        city: event.city,
-        venue: event.venue,
-        dateLabel: event.dateLabel,
-        time: event.time,
-        sectionId: activeSection.id,
-        sectionName: activeSection.name,
-        sectionShort: activeSection.shortCode,
-        price: activeSection.price,
-        seats: selectedSeats,
-        qty: selectedSeats.length,
-        total: activeSection.price * selectedSeats.length
+  function setView(mode) {
+    currentView = mode;
+    overviewView?.classList.toggle("is-visible", mode === "overview");
+    detailView?.classList.toggle("is-visible", mode === "detail");
+    viewOverviewBtn?.classList.toggle("is-active", mode === "overview");
+    viewDetailBtn?.classList.toggle("is-active", mode === "detail");
+  }
+
+  function applyZoom(value) {
+    currentZoom = Math.max(0.85, Math.min(1.7, Number(value) || 1));
+    if (detailScene) detailScene.style.transform = `scale(${currentZoom})`;
+    if (zoomRange) zoomRange.value = String(currentZoom);
+  }
+
+  function renderTabs() {
+    if (!tabs) return;
+    tabs.innerHTML = event.sections.map(section => `
+      <button class="section-tab ${section.id === activeSection.id ? "is-active" : ""}" data-section="${section.id}">
+        ${section.name} · ${formatMXN(section.price)}
+      </button>
+    `).join("");
+
+    $$(".section-tab", tabs).forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeSection = event.sections.find(section => section.id === btn.dataset.section) || activeSection;
+        selectedSeats = [];
+        renderTabs();
+        renderOverviewMap();
+        renderSeatMap();
+        updateSummary();
       });
-      window.location.href = "checkout.html";
+    });
+  }
+
+  function renderOverviewMap() {
+    if (!overviewMap) return;
+    overviewMap.innerHTML = `
+      <svg class="overview-svg" viewBox="0 0 1000 760" preserveAspectRatio="xMidYMid meet" aria-label="Mapa general del Teatro de la Paz">
+        <g class="overview-stage">
+          <path d="M330 86 Q500 42 670 86 L650 164 Q500 194 350 164 Z"></path>
+          <text x="500" y="120" text-anchor="middle">ESCENARIO</text>
+        </g>
+
+        <g class="overview-region pb ${activeSection.id === "PB" ? "is-active" : ""}" data-section="PB">
+          <path d="M136 620 Q500 260 864 620 L792 686 Q500 388 208 686 Z"></path>
+          <text x="500" y="520" text-anchor="middle" font-size="36">PLANTA BAJA</text>
+          <text class="overview-sub" x="500" y="552" text-anchor="middle">${formatMXN((event.sections.find(s => s.id === "PB") || activeSection).price)}</text>
+        </g>
+
+        <g class="overview-region mez ${activeSection.id === "MEZ" ? "is-active" : ""}" data-section="MEZ">
+          <path d="M214 506 Q500 220 786 506 L734 560 Q500 326 266 560 Z"></path>
+          <text x="500" y="432" text-anchor="middle" font-size="32">MEZZANINE</text>
+          <text class="overview-sub" x="500" y="462" text-anchor="middle">${formatMXN((event.sections.find(s => s.id === "MEZ") || activeSection).price)}</text>
+        </g>
+
+        <g class="overview-region bal ${activeSection.id === "BAL" ? "is-active" : ""}" data-section="BAL">
+          <path d="M302 400 Q500 188 698 400 L658 448 Q500 290 342 448 Z"></path>
+          <text x="500" y="344" text-anchor="middle" font-size="28">BALCÓN</text>
+          <text class="overview-sub" x="500" y="372" text-anchor="middle">${formatMXN((event.sections.find(s => s.id === "BAL") || activeSection).price)}</text>
+        </g>
+
+        <text class="overview-note" x="500" y="730" text-anchor="middle">Haz clic en una sección para entrar a la vista detallada</text>
+      </svg>
+      <div class="overview-caption">
+        <span class="overview-chip"><strong>PB</strong> Planta Baja premium</span>
+        <span class="overview-chip"><strong>MEZ</strong> Mezzanine intermedio</span>
+        <span class="overview-chip"><strong>BAL</strong> Balcón acceso general</span>
+      </div>
+    `;
+
+    $$(".overview-region", overviewMap).forEach(region => {
+      region.addEventListener("click", () => {
+        activeSection = event.sections.find(section => section.id === region.dataset.section) || activeSection;
+        selectedSeats = [];
+        renderTabs();
+        renderOverviewMap();
+        renderSeatMap();
+        updateSummary();
+        setView("detail");
+      });
+    });
+  }
+
+  function renderSeatMap() {
+    if (!map || !guideSvg || !rowLabels) return;
+    const conf = geometry[activeSection.id] || geometry.PB;
+    const seatButtons = [];
+    const guidePaths = [];
+    const rowTagHtml = [];
+
+    activeSection.rows.forEach((row, rowIndex) => {
+      const radius = getRowRadius(activeSection, rowIndex);
+      const spread = getRowSpread(activeSection, rowIndex);
+      const startDeg = 270 - (spread / 2);
+      const endDeg = 270 + (spread / 2);
+      const startPoint = toPoint(conf.centerX, conf.centerY, radius, startDeg);
+      const endPoint = toPoint(conf.centerX, conf.centerY, radius, endDeg);
+      guidePaths.push(`<path d="M ${startPoint.x.toFixed(2)} ${startPoint.y.toFixed(2)} A ${radius.toFixed(2)} ${radius.toFixed(2)} 0 0 1 ${endPoint.x.toFixed(2)} ${endPoint.y.toFixed(2)}"></path>`);
+
+      const leftLabel = toPoint(conf.centerX, conf.centerY, radius + 36, startDeg - 2.5);
+      const rightLabel = toPoint(conf.centerX, conf.centerY, radius + 36, endDeg + 2.5);
+      rowTagHtml.push(`<span class="row-tag" style="left:${(leftLabel.x / 10).toFixed(2)}%; top:${(leftLabel.y / 9).toFixed(2)}%;">${row.row}</span>`);
+      rowTagHtml.push(`<span class="row-tag" style="left:${(rightLabel.x / 10).toFixed(2)}%; top:${(rightLabel.y / 9).toFixed(2)}%;">${row.row}</span>`);
+
+      const angles = seatAngles(activeSection, rowIndex, row.seats);
+      angles.forEach((deg, index) => {
+        const number = index + 1;
+        const code = seatCode(activeSection, row.row, number);
+        const label = sectionSeatLabel(activeSection, row.row, number);
+        const point = toPoint(conf.centerX, conf.centerY, radius, deg);
+        const status = getSeatStatus(event, code);
+        const isSelected = selectedSeats.some(item => item.code === code);
+        const finalStatus = isSelected ? "selected" : status;
+        const disabled = status !== "available" ? "disabled" : "";
+        const title = `${label} · ${statusLabel(finalStatus)}`;
+        seatButtons.push(`
+          <button
+            class="seat-pos ${finalStatus} ${conf.seatClass}"
+            type="button"
+            data-code="${code}"
+            data-label="${label}"
+            data-row="${row.row}"
+            data-number="${number}"
+            data-section="${activeSection.id}"
+            data-status="${finalStatus}"
+            title="${title}"
+            style="left:${(point.x / 10).toFixed(2)}%; top:${(point.y / 9).toFixed(2)}%;"
+            ${disabled}
+          ></button>
+        `);
+      });
     });
 
-    $("#clearSelection")?.addEventListener("click", () => {
-      selectedSeats = [];
-      renderSeatMap();
-      updateSummary();
-    });
+    guideSvg.innerHTML = `
+      ${guidePaths.join("")}
+      <path class="guide-center" d="M 500 182 L 500 690"></path>
+      <path class="aisle-line" d="M 465 236 Q 500 438 500 660"></path>
+      <path class="aisle-line" d="M 535 236 Q 500 438 500 660"></path>
+    `;
+    rowLabels.innerHTML = rowTagHtml.join("");
+    map.innerHTML = seatButtons.join("");
 
-    renderTabs();
+    $$(".seat-pos", map).forEach(btn => {
+      btn.addEventListener("mouseenter", () => {
+        renderHoverCard(activeSection, btn.dataset.row, btn.dataset.number, btn.dataset.label, btn.dataset.status);
+      });
+
+      btn.addEventListener("click", () => {
+        if (btn.disabled) return;
+        const code = btn.dataset.code;
+        const label = btn.dataset.label;
+        const row = btn.dataset.row;
+        const number = Number(btn.dataset.number);
+        const exists = selectedSeats.find(item => item.code === code);
+        if (exists) {
+          selectedSeats = selectedSeats.filter(item => item.code !== code);
+        } else {
+          if (selectedSeats.length >= 8) {
+            alert("La simulación permite hasta 8 butacas por compra.");
+            return;
+          }
+          selectedSeats.push({ code, label, row, number, sectionId: activeSection.id, sectionName: activeSection.name });
+          selectedSeats.sort((a, b) => a.row.localeCompare(b.row) || a.number - b.number);
+        }
+        renderSeatMap();
+        updateSummary();
+      });
+    });
+  }
+
+  viewOverviewBtn?.addEventListener("click", () => setView("overview"));
+  viewDetailBtn?.addEventListener("click", () => setView("detail"));
+  $("#zoomIn")?.addEventListener("click", () => applyZoom(currentZoom + 0.1));
+  $("#zoomOut")?.addEventListener("click", () => applyZoom(currentZoom - 0.1));
+  $("#zoomReset")?.addEventListener("click", () => applyZoom(1));
+  zoomRange?.addEventListener("input", () => applyZoom(zoomRange.value));
+
+  $("#continueCheckout")?.addEventListener("click", () => {
+    if (!selectedSeats.length) {
+      alert("Selecciona al menos una butaca para continuar.");
+      return;
+    }
+    storage.setCart({
+      eventSlug: event.slug,
+      eventTitle: event.title,
+      city: event.city,
+      venue: event.venue,
+      dateLabel: event.dateLabel,
+      time: event.time,
+      sectionId: activeSection.id,
+      sectionName: activeSection.name,
+      sectionShort: activeSection.shortCode,
+      price: activeSection.price,
+      seats: selectedSeats,
+      qty: selectedSeats.length,
+      total: activeSection.price * selectedSeats.length
+    });
+    window.location.href = "checkout.html";
+  });
+
+  $("#clearSelection")?.addEventListener("click", () => {
+    selectedSeats = [];
     renderSeatMap();
     updateSummary();
-  }
+  });
+
+  renderTabs();
+  renderOverviewMap();
+  renderSeatMap();
+  updateSummary();
+  setView("overview");
+  applyZoom(1);
+}
 
   function buildCheckoutLayout(cart) {
     return `
