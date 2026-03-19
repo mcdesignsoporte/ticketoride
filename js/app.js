@@ -226,9 +226,9 @@
   const selectedPills = $("#selectedPills");
 
   const geometry = {
-    PB: { centerX: 500, centerY: 900, frontRadius: 730, rowGap: 42, spreadStart: 72, spreadStep: 4.8, seatClass: "pb-seat" },
-    MEZ: { centerX: 500, centerY: 900, frontRadius: 675, rowGap: 40, spreadStart: 64, spreadStep: 4.6, seatClass: "mez-seat" },
-    BAL: { centerX: 500, centerY: 900, frontRadius: 630, rowGap: 42, spreadStart: 58, spreadStep: 4.2, seatClass: "bal-seat" }
+    PB: { centerX: 500, centerY: 112, angleCenter: 90, frontRadius: 238, rowGap: 27, spreadStart: 112, spreadStep: 1.2, seatClass: "pb-seat" },
+    MEZ: { centerX: 500, centerY: 118, angleCenter: 90, frontRadius: 214, rowGap: 24, spreadStart: 102, spreadStep: 1.1, seatClass: "mez-seat" },
+    BAL: { centerX: 500, centerY: 124, angleCenter: 90, frontRadius: 198, rowGap: 24, spreadStart: 94, spreadStep: 1.0, seatClass: "bal-seat" }
   };
 
   function statusLabel(status) {
@@ -269,6 +269,31 @@
     };
   }
 
+  function ringPath(cx, cy, outerR, innerR, startDeg, endDeg) {
+    const outerStart = toPoint(cx, cy, outerR, startDeg);
+    const outerEnd = toPoint(cx, cy, outerR, endDeg);
+    const innerEnd = toPoint(cx, cy, innerR, endDeg);
+    const innerStart = toPoint(cx, cy, innerR, startDeg);
+    const largeArc = Math.abs(endDeg - startDeg) > 180 ? 1 : 0;
+    return [
+      `M ${outerStart.x.toFixed(2)} ${outerStart.y.toFixed(2)}`,
+      `A ${outerR.toFixed(2)} ${outerR.toFixed(2)} 0 ${largeArc} 1 ${outerEnd.x.toFixed(2)} ${outerEnd.y.toFixed(2)}`,
+      `L ${innerEnd.x.toFixed(2)} ${innerEnd.y.toFixed(2)}`,
+      `A ${innerR.toFixed(2)} ${innerR.toFixed(2)} 0 ${largeArc} 0 ${innerStart.x.toFixed(2)} ${innerStart.y.toFixed(2)}`,
+      'Z'
+    ].join(' ');
+  }
+
+  function buildOverviewDots(cx, cy, radius, startDeg, endDeg, count, className = '') {
+    if (!count) return '';
+    const points = Array.from({ length: count }, (_, index) => {
+      const deg = count === 1 ? 270 : startDeg + ((endDeg - startDeg) * index) / (count - 1);
+      const point = toPoint(cx, cy, radius, deg);
+      return `<circle class="${className}" cx="${point.x.toFixed(2)}" cy="${point.y.toFixed(2)}" r="4.2"></circle>`;
+    });
+    return points.join('');
+  }
+
   function getRowSpread(section, rowIndex) {
     const conf = geometry[section.id] || geometry.PB;
     return conf.spreadStart + (rowIndex * conf.spreadStep);
@@ -276,26 +301,28 @@
 
   function getRowRadius(section, rowIndex) {
     const conf = geometry[section.id] || geometry.PB;
-    return conf.frontRadius - (rowIndex * conf.rowGap);
+    return conf.frontRadius + (rowIndex * conf.rowGap);
   }
 
   function seatAngles(section, rowIndex, totalSeats) {
+    const conf = geometry[section.id] || geometry.PB;
+    const center = conf.angleCenter || 90;
     const spread = getRowSpread(section, rowIndex);
-    const start = 270 - (spread / 2);
-    const end = 270 + (spread / 2);
-    const aisleGap = totalSeats >= 18 ? 3.2 : totalSeats >= 12 ? 2.4 : 0;
+    const start = center - (spread / 2);
+    const end = center + (spread / 2);
+    const aisleGap = totalSeats >= 24 ? 3.8 : totalSeats >= 18 ? 3.2 : totalSeats >= 12 ? 2.6 : 0;
 
     if (!aisleGap || totalSeats < 4) {
       return Array.from({ length: totalSeats }, (_, index) => {
-        if (totalSeats === 1) return 270;
+        if (totalSeats === 1) return center;
         return start + ((end - start) * index) / (totalSeats - 1);
       });
     }
 
     const leftCount = Math.ceil(totalSeats / 2);
     const rightCount = totalSeats - leftCount;
-    const leftEnd = 270 - aisleGap;
-    const rightStart = 270 + aisleGap;
+    const leftEnd = center - aisleGap;
+    const rightStart = center + aisleGap;
     const angles = [];
 
     for (let i = 0; i < leftCount; i += 1) {
@@ -396,37 +423,108 @@
 
   function renderOverviewMap() {
     if (!overviewMap) return;
+    const pb = event.sections.find(s => s.id === "PB") || activeSection;
+    const mez = event.sections.find(s => s.id === "MEZ") || activeSection;
+    const bal = event.sections.find(s => s.id === "BAL") || activeSection;
+
+    const cx = 500;
+    const cy = 118;
+    const pbPath = ringPath(cx, cy, 512, 366, 30, 150);
+    const mezPath = ringPath(cx, cy, 360, 268, 34, 146);
+    const balPath = ringPath(cx, cy, 254, 186, 38, 142);
+
     overviewMap.innerHTML = `
-      <svg class="overview-svg" viewBox="0 0 1000 760" preserveAspectRatio="xMidYMid meet" aria-label="Mapa general del Teatro de la Paz">
-        <g class="overview-stage">
-          <path d="M330 86 Q500 42 670 86 L650 164 Q500 194 350 164 Z"></path>
-          <text x="500" y="120" text-anchor="middle">ESCENARIO</text>
+      <svg class="overview-svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" aria-label="Mapa general del Teatro de la Paz">
+        <defs>
+          <linearGradient id="gradStage" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#1b2c4f"></stop>
+            <stop offset="100%" stop-color="#0f172a"></stop>
+          </linearGradient>
+          <linearGradient id="gradPb" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#fb923c"></stop>
+            <stop offset="100%" stop-color="#f97316"></stop>
+          </linearGradient>
+          <linearGradient id="gradMez" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#b197fc"></stop>
+            <stop offset="100%" stop-color="#8b5cf6"></stop>
+          </linearGradient>
+          <linearGradient id="gradBal" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#6ea8ff"></stop>
+            <stop offset="100%" stop-color="#2563eb"></stop>
+          </linearGradient>
+          <filter id="shadowSoft" x="-20%" y="-20%" width="140%" height="160%">
+            <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#0f172a" flood-opacity=".14"></feDropShadow>
+          </filter>
+        </defs>
+
+        <g class="overview-floor">
+          <ellipse cx="500" cy="530" rx="430" ry="132"></ellipse>
+        </g>
+
+        <g class="overview-stage" filter="url(#shadowSoft)">
+          <path class="stage-shell" d="M276 62 H724 V118 C724 160 694 194 650 194 H350 C306 194 276 160 276 118 Z"></path>
+          <path class="stage-inner" d="M316 82 H684 V114 C684 142 662 164 632 164 H368 C338 164 316 142 316 114 Z"></path>
+          <text x="500" y="118" text-anchor="middle">ESCENARIO</text>
+          <text class="stage-subtitle" x="500" y="150" text-anchor="middle">Teatro de la Paz · Vista del público</text>
+        </g>
+
+        <g class="overview-palcos">
+          <path d="M112 226 C128 200 168 186 214 196 L234 284 C194 298 150 306 124 290 C106 278 100 252 112 226 Z"></path>
+          <path d="M888 226 C872 200 832 186 786 196 L766 284 C806 298 850 306 876 290 C894 278 900 252 888 226 Z"></path>
+          <path d="M78 320 C98 290 148 274 206 282 L222 352 C172 364 116 370 88 352 C70 340 64 332 78 320 Z"></path>
+          <path d="M922 320 C902 290 852 274 794 282 L778 352 C828 364 884 370 912 352 C930 340 936 332 922 320 Z"></path>
+          <text x="172" y="244">PALCOS</text>
+          <text x="828" y="244">PALCOS</text>
+        </g>
+
+        <g class="overview-aisles">
+          <path d="M500 196 L500 644"></path>
+          <path d="M372 232 Q 404 408 408 626"></path>
+          <path d="M628 232 Q 596 408 592 626"></path>
+        </g>
+
+        <g class="overview-mini-dots">
+          ${buildOverviewDots(cx, cy, 438, 34, 146, 30)}
+          ${buildOverviewDots(cx, cy, 314, 38, 142, 22)}
+          ${buildOverviewDots(cx, cy, 220, 44, 136, 16)}
         </g>
 
         <g class="overview-region pb ${activeSection.id === "PB" ? "is-active" : ""}" data-section="PB">
-          <path d="M136 620 Q500 260 864 620 L792 686 Q500 388 208 686 Z"></path>
-          <text x="500" y="520" text-anchor="middle" font-size="36">PLANTA BAJA</text>
-          <text class="overview-sub" x="500" y="552" text-anchor="middle">${formatMXN((event.sections.find(s => s.id === "PB") || activeSection).price)}</text>
+          <path class="overview-arc-fill" d="${pbPath}"></path>
+          <path class="overview-region-hit" d="${pbPath}"></path>
+          <g class="overview-label-badge" transform="translate(500 520)">
+            <rect x="-132" y="-30" width="264" height="60" rx="30"></rect>
+            <text x="0" y="-2" text-anchor="middle">PLANTA BAJA</text>
+            <text class="overview-sub" x="0" y="20" text-anchor="middle">${formatMXN(pb.price)}</text>
+          </g>
         </g>
 
         <g class="overview-region mez ${activeSection.id === "MEZ" ? "is-active" : ""}" data-section="MEZ">
-          <path d="M214 506 Q500 220 786 506 L734 560 Q500 326 266 560 Z"></path>
-          <text x="500" y="432" text-anchor="middle" font-size="32">MEZZANINE</text>
-          <text class="overview-sub" x="500" y="462" text-anchor="middle">${formatMXN((event.sections.find(s => s.id === "MEZ") || activeSection).price)}</text>
+          <path class="overview-arc-fill" d="${mezPath}"></path>
+          <path class="overview-region-hit" d="${mezPath}"></path>
+          <g class="overview-label-badge" transform="translate(500 396)">
+            <rect x="-122" y="-28" width="244" height="56" rx="28"></rect>
+            <text x="0" y="-1" text-anchor="middle">MEZZANINE</text>
+            <text class="overview-sub" x="0" y="18" text-anchor="middle">${formatMXN(mez.price)}</text>
+          </g>
         </g>
 
         <g class="overview-region bal ${activeSection.id === "BAL" ? "is-active" : ""}" data-section="BAL">
-          <path d="M302 400 Q500 188 698 400 L658 448 Q500 290 342 448 Z"></path>
-          <text x="500" y="344" text-anchor="middle" font-size="28">BALCÓN</text>
-          <text class="overview-sub" x="500" y="372" text-anchor="middle">${formatMXN((event.sections.find(s => s.id === "BAL") || activeSection).price)}</text>
+          <path class="overview-arc-fill" d="${balPath}"></path>
+          <path class="overview-region-hit" d="${balPath}"></path>
+          <g class="overview-label-badge" transform="translate(500 300)">
+            <rect x="-108" y="-26" width="216" height="52" rx="26"></rect>
+            <text x="0" y="-1" text-anchor="middle">BALCÓN</text>
+            <text class="overview-sub" x="0" y="17" text-anchor="middle">${formatMXN(bal.price)}</text>
+          </g>
         </g>
 
-        <text class="overview-note" x="500" y="730" text-anchor="middle">Haz clic en una sección para entrar a la vista detallada</text>
+        <text class="overview-note" x="500" y="668" text-anchor="middle">Haz clic en una sección para entrar a la vista por butacas</text>
       </svg>
       <div class="overview-caption">
-        <span class="overview-chip"><strong>PB</strong> Planta Baja premium</span>
-        <span class="overview-chip"><strong>MEZ</strong> Mezzanine intermedio</span>
-        <span class="overview-chip"><strong>BAL</strong> Balcón acceso general</span>
+        <span class="overview-chip ${activeSection.id === "PB" ? "is-active" : ""}"><strong>PB</strong> Planta Baja</span>
+        <span class="overview-chip ${activeSection.id === "MEZ" ? "is-active" : ""}"><strong>MEZ</strong> Mezzanine</span>
+        <span class="overview-chip ${activeSection.id === "BAL" ? "is-active" : ""}"><strong>BAL</strong> Balcón</span>
       </div>
     `;
 
@@ -453,8 +551,9 @@
     activeSection.rows.forEach((row, rowIndex) => {
       const radius = getRowRadius(activeSection, rowIndex);
       const spread = getRowSpread(activeSection, rowIndex);
-      const startDeg = 270 - (spread / 2);
-      const endDeg = 270 + (spread / 2);
+      const centerDeg = conf.angleCenter || 90;
+      const startDeg = centerDeg - (spread / 2);
+      const endDeg = centerDeg + (spread / 2);
       const startPoint = toPoint(conf.centerX, conf.centerY, radius, startDeg);
       const endPoint = toPoint(conf.centerX, conf.centerY, radius, endDeg);
       guidePaths.push(`<path d="M ${startPoint.x.toFixed(2)} ${startPoint.y.toFixed(2)} A ${radius.toFixed(2)} ${radius.toFixed(2)} 0 0 1 ${endPoint.x.toFixed(2)} ${endPoint.y.toFixed(2)}"></path>`);
@@ -493,11 +592,38 @@
       });
     });
 
+    const innerRadius = Math.max(148, getRowRadius(activeSection, 0) - 20);
+    const outerRadius = getRowRadius(activeSection, activeSection.rows.length - 1) + 38;
+    const haloSpread = getRowSpread(activeSection, activeSection.rows.length - 1) + 10;
+    const centerDeg = conf.angleCenter || 90;
+    const startDeg = centerDeg - (haloSpread / 2);
+    const endDeg = centerDeg + (haloSpread / 2);
+    const sectionFill = ringPath(conf.centerX, conf.centerY, outerRadius, innerRadius, startDeg, endDeg);
+    const outerStart = toPoint(conf.centerX, conf.centerY, outerRadius, startDeg);
+    const outerEnd = toPoint(conf.centerX, conf.centerY, outerRadius, endDeg);
+    const innerStart = toPoint(conf.centerX, conf.centerY, innerRadius, startDeg);
+    const innerEnd = toPoint(conf.centerX, conf.centerY, innerRadius, endDeg);
+
     guideSvg.innerHTML = `
-      ${guidePaths.join("")}
-      <path class="guide-center" d="M 500 182 L 500 690"></path>
-      <path class="aisle-line" d="M 465 236 Q 500 438 500 660"></path>
-      <path class="aisle-line" d="M 535 236 Q 500 438 500 660"></path>
+      <defs>
+        <linearGradient id="sectionGlow" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="rgba(255,255,255,.38)"></stop>
+          <stop offset="100%" stop-color="rgba(255,255,255,.06)"></stop>
+        </linearGradient>
+      </defs>
+      <ellipse class="audience-shadow" cx="500" cy="654" rx="372" ry="86"></ellipse>
+      <path class="section-fill ${activeSection.colorClass}" d="${sectionFill}"></path>
+      <path class="section-outline" d="M ${outerStart.x.toFixed(2)} ${outerStart.y.toFixed(2)} A ${outerRadius.toFixed(2)} ${outerRadius.toFixed(2)} 0 0 1 ${outerEnd.x.toFixed(2)} ${outerEnd.y.toFixed(2)}"></path>
+      <path class="section-inner-outline" d="M ${innerStart.x.toFixed(2)} ${innerStart.y.toFixed(2)} A ${innerRadius.toFixed(2)} ${innerRadius.toFixed(2)} 0 0 1 ${innerEnd.x.toFixed(2)} ${innerEnd.y.toFixed(2)}"></path>
+      <path class="stage-guide" d="M 330 208 Q 500 166 670 208"></path>
+      ${guidePaths.map(path => path.replace('<path ', '<path class="row-band" ')).join("")}
+      <path class="guide-center" d="M 500 198 L 500 734"></path>
+      <path class="aisle-line" d="M 420 204 Q 392 410 382 746"></path>
+      <path class="aisle-line" d="M 580 204 Q 608 410 618 746"></path>
+      <g class="section-badge" transform="translate(500 246)">
+        <rect x="-132" y="-24" width="264" height="48" rx="24"></rect>
+        <text x="0" y="6" text-anchor="middle">${activeSection.name} · ${formatMXN(activeSection.price)}</text>
+      </g>
     `;
     rowLabels.innerHTML = rowTagHtml.join("");
     map.innerHTML = seatButtons.join("");

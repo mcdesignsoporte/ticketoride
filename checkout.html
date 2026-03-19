@@ -1,15 +1,55 @@
-<?php
-/**
- * Template sugerido para archivo de eventos.
- * Puedes asignarlo a una página o usarlo como archive-ticket_event.php real.
- */
-get_header();
-?>
-<main style="padding:40px 0">
-  <div class="container">
-    <h1>Eventos</h1>
-    <p>Este template puede servir de punto de montaje para el frontend Ticketoride.</p>
-    <div id="ticketoride-events-root"></div>
-  </div>
-</main>
-<?php get_footer(); ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ticketoride | Checkout</title>
+  <meta name="description" content="Finaliza tu compra demo." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="checkout">
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo-ticketoride.png" alt="Logo Ticketoride" class="brand-logo" />
+        <div class="brand-copy">
+          <span class="brand-name">Ticketoride</span>
+          <span class="brand-tag">Checkout demo</span>
+        </div>
+      </a>
+      <nav class="menu">
+        <a href="index.html">Inicio</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="mis-boletos.html">Mis boletos</a>
+        <a href="scanner.html">Acceso</a>
+        <a href="panel.html">Panel</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section alt" style="padding-top:42px">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <span class="kicker">Checkout</span>
+          <h1 style="font-size:2.4rem;margin-bottom:10px;">Completa tu compra demo</h1>
+          <p>Tu orden se guardará localmente y generará boletos digitales listos para simular acceso.</p>
+        </div>
+      </div>
+
+      <div class="checkout-layout" id="checkoutWrap"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-wrap">
+      <p>© 2026 Ticketoride</p>
+      <p>Powered by <strong>MC Creative Studio</strong> · 444 794 7990</p>
+    </div>
+  </footer>
+
+  <script src="js/mock-data.js"></script>
+  <script src="js/wp-bridge.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
