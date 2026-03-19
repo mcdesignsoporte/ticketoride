@@ -530,7 +530,7 @@
         <g class="overview-region pb ${activeSection.id === "PB" ? "is-active" : ""}" data-section="PB">
           <path class="overview-arc-fill" d="${pbPath}"></path>
           <path class="overview-region-hit" d="${pbPath}"></path>
-          <g class="overview-label-badge" transform="translate(500 334)">
+          <g class="overview-label-badge" transform="translate(500 612)">
             <rect x="-132" y="-30" width="264" height="60" rx="30"></rect>
             <text x="0" y="-2" text-anchor="middle">PLANTA BAJA</text>
             <text class="overview-sub" x="0" y="20" text-anchor="middle">${formatMXN(pb.price)}</text>
@@ -550,7 +550,7 @@
         <g class="overview-region bal ${activeSection.id === "BAL" ? "is-active" : ""}" data-section="BAL">
           <path class="overview-arc-fill" d="${balPath}"></path>
           <path class="overview-region-hit" d="${balPath}"></path>
-          <g class="overview-label-badge" transform="translate(500 612)">
+          <g class="overview-label-badge" transform="translate(500 334)">
             <rect x="-108" y="-26" width="216" height="52" rx="26"></rect>
             <text x="0" y="-1" text-anchor="middle">BALCÓN</text>
             <text class="overview-sub" x="0" y="17" text-anchor="middle">${formatMXN(bal.price)}</text>
