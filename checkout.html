@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ticketoride | Checkout</title>
-  <meta name="description" content="Finaliza tu compra de boletos en Ticketoride." />
+  <meta name="description" content="Finaliza tu compra demo." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-page="checkout">
@@ -14,10 +14,9 @@
         <img src="assets/img/logo-ticketoride.png" alt="Logo Ticketoride" class="brand-logo" />
         <div class="brand-copy">
           <span class="brand-name">Ticketoride</span>
-          <span class="brand-tag">Boletos para vivir la experiencia</span>
+          <span class="brand-tag">Checkout demo</span>
         </div>
       </a>
-
       <nav class="menu">
         <a href="index.html">Inicio</a>
         <a href="eventos.html">Eventos</a>
@@ -28,203 +27,18 @@
     </div>
   </header>
 
-  <main>
-    <section class="section alt" style="padding-top:48px">
-      <div class="container">
-        <div class="section-head left">
-          <span class="section-kicker red">Checkout</span>
-          <h2>Finaliza tu compra de forma rápida y segura</h2>
-          <p>
-            Revisa tu selección, completa tus datos y confirma tu compra para recibir
-            tus boletos digitales de inmediato.
-          </p>
-        </div>
-
-        <div class="split-grid">
-          <div class="feature-card" style="padding:28px;">
-            <h3 style="margin-top:0;">Datos del comprador</h3>
-            <p class="muted" style="margin-bottom:20px;">
-              Completa la información para generar tu orden y enviar los boletos.
-            </p>
-
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
-              <div>
-                <label for="nombre" style="display:block;font-weight:700;margin-bottom:8px;">Nombre</label>
-                <input id="nombre" type="text" placeholder="Tu nombre"
-                  style="width:100%;min-height:48px;border:1px solid #dbe2ea;border-radius:12px;padding:0 14px;font-size:16px;">
-              </div>
-
-              <div>
-                <label for="apellido" style="display:block;font-weight:700;margin-bottom:8px;">Apellido</label>
-                <input id="apellido" type="text" placeholder="Tu apellido"
-                  style="width:100%;min-height:48px;border:1px solid #dbe2ea;border-radius:12px;padding:0 14px;font-size:16px;">
-              </div>
-
-              <div>
-                <label for="correo" style="display:block;font-weight:700;margin-bottom:8px;">Correo electrónico</label>
-                <input id="correo" type="email" placeholder="correo@ejemplo.com"
-                  style="width:100%;min-height:48px;border:1px solid #dbe2ea;border-radius:12px;padding:0 14px;font-size:16px;">
-              </div>
-
-              <div>
-                <label for="telefono" style="display:block;font-weight:700;margin-bottom:8px;">Teléfono</label>
-                <input id="telefono" type="tel" placeholder="444 000 0000"
-                  style="width:100%;min-height:48px;border:1px solid #dbe2ea;border-radius:12px;padding:0 14px;font-size:16px;">
-              </div>
-            </div>
-
-            <div style="margin-top:18px;">
-              <label for="notas" style="display:block;font-weight:700;margin-bottom:8px;">Notas adicionales</label>
-              <textarea id="notas" placeholder="Escribe aquí algún comentario para tu compra"
-                style="width:100%;min-height:120px;border:1px solid #dbe2ea;border-radius:12px;padding:14px;font-size:16px;resize:vertical;"></textarea>
-            </div>
-
-            <div style="margin-top:24px;">
-              <h3 style="margin:0 0 14px;">Método de pago</h3>
-
-              <div class="feature-card" style="margin-bottom:12px;">
-                <label style="display:flex;align-items:center;gap:12px;cursor:pointer;">
-                  <input type="radio" name="pago" checked>
-                  <span><strong>Tarjeta</strong> · Pago con débito o crédito</span>
-                </label>
-              </div>
-
-              <div class="feature-card" style="margin-bottom:12px;">
-                <label style="display:flex;align-items:center;gap:12px;cursor:pointer;">
-                  <input type="radio" name="pago">
-                  <span><strong>Transferencia</strong> · Confirmación bancaria</span>
-                </label>
-              </div>
-
-              <div class="feature-card">
-                <label style="display:flex;align-items:center;gap:12px;cursor:pointer;">
-                  <input type="radio" name="pago">
-                  <span><strong>Pago en tienda</strong> · Referencia de pago</span>
-                </label>
-              </div>
-            </div>
-
-            <div style="margin-top:22px;display:flex;align-items:flex-start;gap:10px;">
-              <input id="terminos" type="checkbox" style="margin-top:4px;">
-              <label for="terminos" style="color:var(--muted);line-height:1.6;">
-                Confirmo que he revisado los datos de mi compra y acepto los términos del evento.
-              </label>
-            </div>
-          </div>
-
-          <aside>
-            <div class="feature-card" style="padding:28px;margin-bottom:18px;">
-              <span class="section-kicker red" style="margin-bottom:14px;">Resumen del pedido</span>
-              <h3 style="margin-top:0;">Festival Live Night 2026</h3>
-              <p class="muted" style="margin-bottom:18px;">San Luis Potosí, MX · Arena Open Stage</p>
-
-              <div style="display:grid;gap:14px;">
-                <div style="display:flex;justify-content:space-between;gap:12px;">
-                  <span>Zona</span>
-                  <strong>General</strong>
-                </div>
-
-                <div style="display:flex;justify-content:space-between;gap:12px;">
-                  <span>Cantidad</span>
-                  <strong>1 boleto</strong>
-                </div>
-
-                <div style="display:flex;justify-content:space-between;gap:12px;">
-                  <span>Precio</span>
-                  <strong>$450 MXN</strong>
-                </div>
-
-                <div style="display:flex;justify-content:space-between;gap:12px;">
-                  <span>Cargo por servicio</span>
-                  <strong>$35 MXN</strong>
-                </div>
-
-                <div style="display:flex;justify-content:space-between;gap:12px;">
-                  <span>Envío digital</span>
-                  <strong>Sin costo</strong>
-                </div>
-              </div>
-
-              <hr style="border:none;border-top:1px solid #e5e7eb;margin:18px 0;">
-
-              <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
-                <span style="font-size:18px;font-weight:700;">Total</span>
-                <strong style="font-size:24px;">$485 MXN</strong>
-              </div>
-            </div>
-
-            <div class="feature-card" style="padding:28px;margin-bottom:18px;">
-              <h3 style="margin-top:0;">Cupón de descuento</h3>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                <input type="text" placeholder="Ingresa tu cupón"
-                  style="flex:1;min-width:180px;min-height:46px;border:1px solid #dbe2ea;border-radius:12px;padding:0 14px;font-size:16px;">
-                <button class="btn btn-secondary" type="button">Aplicar</button>
-              </div>
-            </div>
-
-            <div class="feature-card" style="padding:28px;">
-              <h3 style="margin-top:0;">Confirma tu compra</h3>
-              <p class="muted" style="margin-bottom:18px;">
-                Una vez completado el pago, tus boletos estarán disponibles en tu cuenta.
-              </p>
-
-              <div class="row-actions" style="display:flex;gap:12px;flex-wrap:wrap;">
-                <a href="mis-boletos.html" class="btn btn-primary">Pagar ahora</a>
-                <a href="evento.html?slug=festival-live-night-2026" class="btn btn-secondary">Volver al evento</a>
-              </div>
-            </div>
-          </aside>
+  <main class="section alt" style="padding-top:42px">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <span class="kicker">Checkout</span>
+          <h1 style="font-size:2.4rem;margin-bottom:10px;">Completa tu compra demo</h1>
+          <p>Tu orden se guardará localmente y generará boletos digitales listos para simular acceso.</p>
         </div>
       </div>
-    </section>
 
-    <section class="section dark">
-      <div class="container">
-        <div class="section-head left">
-          <span class="section-kicker">Compra con confianza</span>
-          <h2>Un checkout claro ayuda a cerrar más ventas</h2>
-          <p>
-            Cuando el proceso es simple, visual y ordenado, el usuario avanza con mayor seguridad
-            hasta completar su compra.
-          </p>
-        </div>
-
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Resumen visible</h3>
-            <p>El comprador entiende claramente qué está pagando, cuánto cuesta y qué recibirá.</p>
-          </article>
-
-          <article class="feature-card">
-            <h3>Menos fricción</h3>
-            <p>Datos simples, buena jerarquía visual y pasos claros para terminar la orden.</p>
-          </article>
-
-          <article class="feature-card">
-            <h3>Entrega digital</h3>
-            <p>Boletos accesibles desde celular para una experiencia más práctica y moderna.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="cta-band">
-          <div>
-            <h2 style="margin:0 0 10px;">Tu acceso está a un paso</h2>
-            <p style="margin:0;color:var(--muted);max-width:760px;">
-              Completa tu compra y recibe tus boletos digitales para vivir la experiencia con Ticketoride.
-            </p>
-          </div>
-
-          <div class="row-actions">
-            <a class="btn btn-primary" href="mis-boletos.html">Continuar</a>
-            <a class="btn btn-secondary" href="eventos.html">Seguir explorando</a>
-          </div>
-        </div>
-      </div>
-    </section>
+      <div class="checkout-layout" id="checkoutWrap"></div>
+    </div>
   </main>
 
   <footer class="footer">

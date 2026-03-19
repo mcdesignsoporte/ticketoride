@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ticketoride | Eventos</title>
-  <meta name="description" content="Explora conciertos, festivales y shows en Ticketoride." />
+  <meta name="description" content="Cartelera demo de Ticketoride." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-page="events">
@@ -14,13 +14,12 @@
         <img src="assets/img/logo-ticketoride.png" alt="Logo Ticketoride" class="brand-logo" />
         <div class="brand-copy">
           <span class="brand-name">Ticketoride</span>
-          <span class="brand-tag">Boletos para vivir la experiencia</span>
+          <span class="brand-tag">Cartelera de simulación</span>
         </div>
       </a>
-
       <nav class="menu">
         <a href="index.html">Inicio</a>
-        <a href="eventos.html">Eventos</a>
+        <a href="eventos.html" class="is-active">Eventos</a>
         <a href="mis-boletos.html">Mis boletos</a>
         <a href="scanner.html">Acceso</a>
         <a href="panel.html">Panel</a>
@@ -28,173 +27,28 @@
     </div>
   </header>
 
-  <main>
-    <section class="section alt" style="padding-top:48px">
-      <div class="container">
-        <div class="section-head left">
-          <span class="section-kicker red">Cartelera</span>
-          <h2>Explora eventos y encuentra tu próxima experiencia</h2>
-          <p>
-            Descubre conciertos, festivales y shows con una vista clara, moderna y pensada
-            para facilitar la compra de boletos.
-          </p>
-        </div>
-
-        <div class="toolbar">
-          <input id="filterSearch" type="text" placeholder="Buscar por evento, ciudad o sede" />
-          <select id="filterCategory">
-            <option value="all">Todas las categorías</option>
-            <option value="Festival">Festival</option>
-            <option value="Concierto">Concierto</option>
-            <option value="Show">Show</option>
-          </select>
-          <span class="eyebrow" style="margin:0" id="eventsCount">6 evento(s)</span>
-        </div>
-
-        <div id="eventsGrid" class="event-grid">
-          <article class="event-card">
-            <div class="event-cover cover-1">
-              <span class="mini-badge">Festival</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">20 MAR · 8:00 PM</div>
-              <h3>Festival Live Night 2026</h3>
-              <p>Una experiencia de alto impacto con zonas, acceso digital y compra rápida.</p>
-              <div class="event-bottom">
-                <strong>Desde $450 MXN</strong>
-                <a href="evento.html?slug=festival-live-night-2026">Ver evento</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="event-card">
-            <div class="event-cover cover-2">
-              <span class="mini-badge">Concierto</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">15 ABR · 9:00 PM</div>
-              <h3>Electro Wave Tour</h3>
-              <p>Una noche intensa con estética premium y una experiencia de compra clara.</p>
-              <div class="event-bottom">
-                <strong>Desde $590 MXN</strong>
-                <a href="evento.html?slug=electro-wave-tour">Ver evento</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="event-card">
-            <div class="event-cover cover-3">
-              <span class="mini-badge">Festival</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">28 MAY · 6:00 PM</div>
-              <h3>Sunset Beats</h3>
-              <p>Ideal para mostrar zonas, precios y una experiencia más visual para el asistente.</p>
-              <div class="event-bottom">
-                <strong>Desde $720 MXN</strong>
-                <a href="evento.html?slug=sunset-beats">Ver evento</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="event-card">
-            <div class="event-cover cover-1">
-              <span class="mini-badge">Show</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">12 JUN · 8:30 PM</div>
-              <h3>Night Pulse Experience</h3>
-              <p>Una propuesta moderna con navegación más simple y mejor presencia visual.</p>
-              <div class="event-bottom">
-                <strong>Desde $480 MXN</strong>
-                <a href="evento.html?slug=night-pulse-experience">Ver evento</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="event-card">
-            <div class="event-cover cover-2">
-              <span class="mini-badge">Concierto</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">05 JUL · 9:30 PM</div>
-              <h3>Golden Lights Tour</h3>
-              <p>Evento con enfoque en experiencia premium, acceso digital y compra directa.</p>
-              <div class="event-bottom">
-                <strong>Desde $650 MXN</strong>
-                <a href="evento.html?slug=golden-lights-tour">Ver evento</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="event-card">
-            <div class="event-cover cover-3">
-              <span class="mini-badge">Festival</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">19 AGO · 5:00 PM</div>
-              <h3>Summer Sound Fest</h3>
-              <p>Cartelera pensada para impulsar conversión y proyectar más nivel ante el cliente.</p>
-              <div class="event-bottom">
-                <strong>Desde $780 MXN</strong>
-                <a href="evento.html?slug=summer-sound-fest">Ver evento</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section dark">
-      <div class="container split-grid">
+  <main class="section alt" style="padding-top:42px">
+    <div class="container">
+      <div class="page-head">
         <div>
-          <span class="section-kicker">Más eventos, mejor experiencia</span>
-          <h2>Una cartelera diseñada para vender mejor</h2>
-          <p class="soft">
-            La presentación visual ayuda a que el usuario encuentre rápido su evento,
-            vea precios con claridad y avance al detalle de compra con mayor confianza.
-          </p>
-
-          <div class="hero-actions">
-            <a href="evento.html?slug=festival-live-night-2026" class="btn btn-primary">Comprar boletos</a>
-            <a href="mis-boletos.html" class="btn btn-ghost">Ver mis boletos</a>
-          </div>
-        </div>
-
-        <div class="glass-stack">
-          <div class="glass-card">
-            <h3>Exploración más clara</h3>
-            <p>Eventos mejor organizados para que el usuario identifique rápido fecha, tipo y precio.</p>
-          </div>
-          <div class="glass-card">
-            <h3>Mayor intención de compra</h3>
-            <p>Botones y tarjetas pensados para dirigir al usuario directo al detalle del evento.</p>
-          </div>
-          <div class="glass-card">
-            <h3>Imagen más profesional</h3>
-            <p>Una cartelera sólida ayuda a transmitir confianza y elevar la percepción de la marca.</p>
-          </div>
+          <span class="kicker">Cartelera</span>
+          <h1 style="font-size:2.4rem;margin-bottom:10px;">Eventos de simulación</h1>
+          <p>La base ya está enfocada en Teatro de la Paz, lista para enseñarla y seguir integrando.</p>
         </div>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="cta-band">
-          <div>
-            <h2 style="margin:0 0 10px">Encuentra tu próximo evento en Ticketoride</h2>
-            <p style="margin:0;color:var(--muted);max-width:760px">
-              Descubre experiencias, elige tu acceso y completa tu compra desde cualquier dispositivo.
-            </p>
-          </div>
-
-          <div class="row-actions">
-            <a class="btn btn-primary" href="evento.html?slug=festival-live-night-2026">Ir al evento</a>
-            <a class="btn btn-secondary" href="index.html">Volver al inicio</a>
-          </div>
-        </div>
+      <div class="toolbar">
+        <input id="filterSearch" type="text" placeholder="Buscar por nombre, sede o ciudad" />
+        <select id="filterCategory">
+          <option value="all">Todas las categorías</option>
+          <option value="Teatro">Teatro</option>
+          <option value="Concierto">Concierto</option>
+        </select>
+        <span class="badge" id="eventsCount">0 evento(s)</span>
       </div>
-    </section>
+
+      <div id="eventsGrid" class="events-grid"></div>
+    </div>
   </main>
 
   <footer class="footer">

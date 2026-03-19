@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ticketoride | Powered by MC Creative Studio</title>
-  <meta name="description" content="Compra boletos para conciertos, festivales y eventos en Ticketoride." />
+  <title>Ticketoride | Simulación Teatro de la Paz</title>
+  <meta name="description" content="Simulación de boletera con asientos numerados para Teatro de la Paz, S.L.P." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-page="home">
@@ -14,12 +14,11 @@
         <img src="assets/img/logo-ticketoride.png" alt="Logo Ticketoride" class="brand-logo" />
         <div class="brand-copy">
           <span class="brand-name">Ticketoride</span>
-          <span class="brand-tag">Boletos para vivir la experiencia</span>
+          <span class="brand-tag">Simulación lista para GitHub + WordPress</span>
         </div>
       </a>
-
       <nav class="menu">
-        <a href="index.html">Inicio</a>
+        <a href="index.html" class="is-active">Inicio</a>
         <a href="eventos.html">Eventos</a>
         <a href="mis-boletos.html">Mis boletos</a>
         <a href="scanner.html">Acceso</a>
@@ -31,217 +30,101 @@
   <main>
     <section class="hero">
       <div class="container hero-grid">
-        <div class="hero-copy">
-          <span class="eyebrow">Plataforma de boletaje</span>
-          <h1>Compra tus boletos de forma rápida, clara y segura</h1>
+        <article class="hero-card">
+          <span class="kicker">Demo activa · Teatro de la Paz</span>
+          <h1>Simulación de boletera con layout, asientos numerados y acceso por QR</h1>
           <p>
-            Ticketoride te ofrece una experiencia moderna para descubrir eventos,
-            elegir tu zona, completar tu compra y recibir tus boletos digitales
-            en un solo flujo.
+            Esta versión ya viene orientada a <strong>Teatro de la Paz, S.L.P.</strong>, con secciones en español,
+            butacas por fila, precios por zona, checkout demo y módulo de acceso listo para simulaciones.
           </p>
-
+          <div class="badge-row">
+            <span class="badge">Planta Baja · $1,000</span>
+            <span class="badge">Mezzanine · $750</span>
+            <span class="badge">Balcón · $350</span>
+          </div>
           <div class="hero-actions">
-            <a href="eventos.html" class="btn btn-primary">Explorar eventos</a>
-            <a href="evento.html?slug=festival-live-night-2026" class="btn btn-ghost">Comprar ahora</a>
+            <a href="evento.html?slug=teatro-de-la-paz-slp" class="btn btn-primary">Ver simulación</a>
+            <a href="panel.html" class="btn btn-secondary">Ver panel</a>
           </div>
+        </article>
 
-          <div class="metric-row">
-            <div class="metric-card">
-              <strong>Compra segura</strong>
-              <span>Flujo claro desde el primer clic</span>
-            </div>
-            <div class="metric-card">
-              <strong>Boletos digitales</strong>
-              <span>Acceso rápido desde tu celular</span>
-            </div>
-            <div class="metric-card">
-              <strong>Eventos destacados</strong>
-              <span>Con mejor presentación visual</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="featured-card">
-          <div class="panel-top">
-            <span class="live-pill">Evento destacado</span>
-            <span class="status-dot">Venta activa</span>
-          </div>
-
-          <div class="featured-head">
-            <img src="assets/img/logo-ticketoride.png" alt="Ticketoride" class="featured-logo" />
-            <div>
-              <p class="featured-label">Festival principal</p>
-              <h2>Live Night 2026</h2>
-            </div>
-          </div>
-
-          <p class="featured-place">San Luis Potosí, MX · Arena Open Stage</p>
-
-          <div class="chip-row">
-            <span class="chip">20 Mar</span>
-            <span class="chip">8:00 PM</span>
-            <span class="chip">Acceso general</span>
-          </div>
-
-          <div class="zone-list">
-            <div class="zone-item">
-              <span>VIP</span>
-              <strong>$1,250 MXN</strong>
-            </div>
-            <div class="zone-item">
-              <span>Preferente</span>
-              <strong>$850 MXN</strong>
-            </div>
-            <div class="zone-item">
-              <span>General</span>
-              <strong>$450 MXN</strong>
-            </div>
-          </div>
-
-          <div class="featured-footer">
-            <div>
-              <small>Precio desde</small>
-              <strong class="price">$450 MXN</strong>
-            </div>
-            <a href="evento.html?slug=festival-live-night-2026" class="btn btn-primary">Comprar boletos</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <span class="section-kicker red">Experiencia completa</span>
-          <h2>Todo lo que el usuario necesita para comprar boletos</h2>
-          <p>
-            Una plataforma pensada para mostrar eventos, facilitar la compra y mejorar la experiencia del asistente antes, durante y después del evento.
-          </p>
-        </div>
-
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Catálogo de eventos</h3>
-            <p>Explora conciertos, festivales y shows con una vista clara, atractiva y fácil de navegar.</p>
+        <aside class="hero-side">
+          <article class="price-card panel-card">
+            <span class="kicker">Estructura del demo</span>
+            <div class="price-value">PB / MEZ / BAL</div>
+            <p class="price-note">
+              Nomenclatura corta y clara para boleto, checkout, panel y acceso:
+              <strong>P A1</strong>, <strong>MEZ B4</strong>, <strong>BAL C10</strong>.
+            </p>
           </article>
-
-          <article class="feature-card">
-            <h3>Zonas y precios</h3>
-            <p>Consulta categorías de acceso, disponibilidad y costos en una presentación más profesional.</p>
+          <article class="panel-card">
+            <h3 style="margin-top:0;">Qué incluye esta base</h3>
+            <div class="summary-list">
+              <div class="summary-item"><span>Layout de referencia</span><strong>Sí</strong></div>
+              <div class="summary-item"><span>Selección de asientos</span><strong>Sí</strong></div>
+              <div class="summary-item"><span>Boletos digitales</span><strong>Sí</strong></div>
+              <div class="summary-item"><span>Acceso y validación</span><strong>Sí</strong></div>
+            </div>
           </article>
-
-          <article class="feature-card">
-            <h3>Boletos digitales</h3>
-            <p>Accede a tus tickets desde el celular y agiliza el ingreso al evento con validación rápida.</p>
-          </article>
-        </div>
+        </aside>
       </div>
     </section>
 
     <section class="section alt">
       <div class="container">
-        <div class="section-head">
-          <span class="section-kicker red">Eventos destacados</span>
-          <h2>Descubre lo mejor de la cartelera</h2>
-          <p>Una selección visual que ayuda a impulsar la venta y a mostrar mejor cada experiencia.</p>
+        <div class="page-head">
+          <div>
+            <span class="kicker">Secciones configuradas</span>
+            <h1 style="font-size:2.1rem;margin-bottom:10px;">Recinto listo para simular</h1>
+            <p>El modelo se entrega con layout visual, referencia del plano y selección real por butaca.</p>
+          </div>
+          <a href="eventos.html" class="btn btn-secondary">Ir a eventos</a>
         </div>
 
-        <div class="event-grid">
-          <article class="event-card">
-            <div class="event-cover cover-1">
-              <span class="mini-badge">Concierto</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">15 ABR · 9:00 PM</div>
-              <h3>Electro Wave Tour</h3>
-              <p>Una experiencia nocturna con una imagen premium y flujo de compra directo.</p>
-              <div class="event-bottom">
-                <strong>Desde $590 MXN</strong>
-                <a href="evento.html?slug=electro-wave-tour">Ver evento</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="event-card">
-            <div class="event-cover cover-2">
-              <span class="mini-badge">Festival</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">28 MAY · 6:00 PM</div>
-              <h3>Sunset Beats</h3>
-              <p>Ideal para mostrar zonas, precios y una compra más clara para el usuario.</p>
-              <div class="event-bottom">
-                <strong>Desde $720 MXN</strong>
-                <a href="evento.html?slug=sunset-beats">Ver evento</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="event-card">
-            <div class="event-cover cover-3">
-              <span class="mini-badge">Show en vivo</span>
-            </div>
-            <div class="event-content">
-              <div class="event-date">12 JUN · 8:30 PM</div>
-              <h3>Night Pulse Experience</h3>
-              <p>Una propuesta visual moderna para vender mejor y proyectar más nivel.</p>
-              <div class="event-bottom">
-                <strong>Desde $480 MXN</strong>
-                <a href="evento.html?slug=night-pulse-experience">Ver evento</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section dark">
-      <div class="container split-grid">
-        <div>
-          <span class="section-kicker">Compra simple y profesional</span>
-          <h2>Una plataforma pensada para impulsar ventas</h2>
-          <p class="soft">
-            Desde la portada hasta el boleto digital, todo está planteado para transmitir confianza,
-            mejorar la experiencia del usuario y facilitar la conversión en cada evento.
-          </p>
-
-          <div class="hero-actions">
-            <a href="eventos.html" class="btn btn-primary">Ver eventos</a>
-            <a href="mis-boletos.html" class="btn btn-ghost">Ver mis boletos</a>
-          </div>
-        </div>
-
-        <div class="glass-stack">
-          <div class="glass-card">
-            <h3>Mayor confianza</h3>
-            <p>Una imagen sólida ayuda a que el usuario sienta seguridad al momento de comprar.</p>
-          </div>
-          <div class="glass-card">
-            <h3>Mejor experiencia</h3>
-            <p>Navegación clara, precios visibles y una compra más fluida desde cualquier dispositivo.</p>
-          </div>
-          <div class="glass-card">
-            <h3>Operación más ágil</h3>
-            <p>Boletos digitales, scanner y panel operativo para una experiencia más completa.</p>
-          </div>
-        </div>
+        <div id="homeSections" class="cards-grid"></div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container">
-        <div class="cta-band">
-          <div>
-            <h2 style="margin:0 0 10px">Vive la experiencia completa con Ticketoride</h2>
-            <p style="margin:0;color:var(--muted);max-width:760px">
-              Encuentra tu evento, selecciona tu acceso, realiza tu compra y recibe tus boletos digitales al instante.
-            </p>
-          </div>
+      <div class="container two-col">
+        <article class="seat-shell plan-card">
+          <span class="kicker">Plano de referencia</span>
+          <img src="assets/img/teatro-de-la-paz-plano.jpg" alt="Plano Teatro de la Paz" />
+          <small>Imagen de referencia integrada para respaldar el layout de la simulación.</small>
+        </article>
 
-          <div class="row-actions">
-            <a class="btn btn-primary" href="evento.html?slug=festival-live-night-2026">Comprar boletos</a>
-            <a class="btn btn-secondary" href="scanner.html">Ver acceso</a>
+        <article class="summary-card">
+          <span class="kicker">Flujo del demo</span>
+          <h3>Cómo se usa esta simulación</h3>
+          <div class="summary-list">
+            <div class="summary-item"><span>1. Selección</span><strong>Butaca por fila</strong></div>
+            <div class="summary-item"><span>2. Checkout</span><strong>Resumen por asiento</strong></div>
+            <div class="summary-item"><span>3. Boleto</span><strong>QR visual + folio</strong></div>
+            <div class="summary-item"><span>4. Acceso</span><strong>Validación manual</strong></div>
           </div>
+          <div class="split-actions">
+            <a href="evento.html?slug=teatro-de-la-paz-slp" class="btn btn-primary">Empezar compra</a>
+            <a href="scanner.html" class="btn btn-soft">Ir a acceso</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>GitHub listo</h3>
+            <p>La simulación corre con archivos estáticos y <code>localStorage</code>, ideal para pruebas rápidas y publicación en GitHub Pages.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Base para WordPress</h3>
+            <p>Se conserva el puente <code>js/wp-bridge.js</code> para evolucionar después a endpoints y checkout real en WordPress.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Presentable al cliente</h3>
+            <p>La experiencia ya se ve como boletera: secciones, asientos, resumen, boletos, acceso y panel operativo.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -249,7 +132,7 @@
 
   <footer class="footer">
     <div class="container footer-wrap">
-      <p>© 2026 Ticketoride</p>
+      <p>© 2026 Ticketoride · Simulación Teatro de la Paz</p>
       <p>Powered by <strong>MC Creative Studio</strong> · 444 794 7990</p>
     </div>
   </footer>

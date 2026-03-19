@@ -1,157 +1,98 @@
-window.TICKETORIDE_MOCK_DATA = {
-  "events": [
-    {
-      "id": "EVT-001",
-      "slug": "festival-live-night-2026",
-      "title": "Festival Live Night 2026",
-      "city": "San Luis Potosí, MX",
-      "venue": "Arena Open Stage",
-      "date": "2026-03-20",
-      "dateLabel": "20 Mar 2026",
-      "time": "8:00 PM",
-      "category": "Festival",
-      "startingPrice": 450,
-      "status": "Alta demanda",
-      "heroTag": "Evento destacado",
-      "summary": "Una experiencia principal con enfoque premium, pensada para reflejar cómo debe verse una boletera seria y moderna.",
-      "description": "Live Night 2026 reúne música en vivo, producción visual, control de accesos y experiencia de compra más clara para el usuario. Esta vista está diseñada para convencer tanto a asistentes como a promotores.",
-      "coverClass": "cover-live-night",
-      "zones": [
-        {
-          "id": "general",
-          "name": "General",
-          "price": 450,
-          "desc": "Acceso estándar con compra rápida."
-        },
-        {
-          "id": "preferente",
-          "name": "Preferente",
-          "price": 850,
-          "desc": "Mejor ubicación y percepción premium."
-        },
-        {
-          "id": "vip",
-          "name": "VIP",
-          "price": 1250,
-          "desc": "Zona exclusiva e ingreso preferente."
-        }
-      ],
-      "faqs": [
-        [
-          "¿El boleto llega al momento?",
-          "Sí, en esta propuesta el flujo termina en una cartera digital de boletos lista para QR."
-        ],
-        [
-          "¿Se puede escanear desde el celular?",
-          "Sí, el diseño está preparado para validación desde un QR mostrado en pantalla."
-        ],
-        [
-          "¿Después se puede conectar a WordPress?",
-          "Sí, el paquete incluye un puente de integración para WordPress y WooCommerce."
-        ]
-      ]
+
+(function () {
+  function rowsFromSpec(spec) {
+    return spec.map(([row, seats]) => ({ row, seats }));
+  }
+
+  const theatreEvent = {
+    id: "TDP-001",
+    slug: "teatro-de-la-paz-slp",
+    title: "Teatro de la Paz",
+    category: "Teatro",
+    city: "San Luis Potosí, MX",
+    venue: "Teatro de la Paz, S.L.P.",
+    date: "2026-03-20",
+    dateLabel: "20 Mar 2026",
+    time: "8:00 PM",
+    heroTag: "Simulación activa",
+    status: "Layout listo",
+    startingPrice: 350,
+    summary: "Simulación de compra con layout de referencia, secciones en español, asientos numerados y control de acceso.",
+    description: "Base demo para presentar una boletera funcional del Teatro de la Paz con Planta Baja, Mezzanine y Balcón.",
+    sections: [
+      {
+        id: "PB",
+        shortCode: "P",
+        name: "Planta Baja",
+        price: 1000,
+        colorClass: "pb",
+        description: "Zona principal del recinto. Mayor cercanía y precio premium.",
+        rows: rowsFromSpec([
+          ["A",17],["B",19],["C",21],["D",23],["E",25],
+          ["F",27],["G",29],["H",31],["I",33],["J",37],["K",41]
+        ])
+      },
+      {
+        id: "MEZ",
+        shortCode: "MEZ",
+        name: "Mezzanine",
+        price: 750,
+        colorClass: "mez",
+        description: "Sección intermedia con excelente visibilidad y valor balanceado.",
+        rows: rowsFromSpec([
+          ["A",14],["B",16],["C",18],["D",20],["E",22],["F",24],["G",26],["H",28]
+        ])
+      },
+      {
+        id: "BAL",
+        shortCode: "BAL",
+        name: "Balcón",
+        price: 350,
+        colorClass: "bal",
+        description: "Zona alta del recinto con acceso más económico para el público general.",
+        rows: rowsFromSpec([
+          ["A",12],["B",14],["C",16],["D",18],["E",20],["F",22]
+        ])
+      }
+    ],
+    demoSoldSeats: [
+      "PB-A2","PB-A3","PB-B5","PB-B6","PB-C10","PB-D7","PB-E14","PB-F21","PB-H8","PB-I20","PB-K37",
+      "MEZ-A4","MEZ-B7","MEZ-C9","MEZ-D12","MEZ-E15","MEZ-H24",
+      "BAL-A3","BAL-B9","BAL-C12","BAL-F20"
+    ],
+    demoHeldSeats: [
+      "PB-A1","PB-C11","PB-G15","PB-J18",
+      "MEZ-B8","MEZ-F18",
+      "BAL-D11","BAL-E14"
+    ]
+  };
+
+  const supportEvent = {
+    id: "TDP-002",
+    slug: "teatro-demo-wordpress",
+    title: "Demo integración WordPress",
+    category: "Concierto",
+    city: "San Luis Potosí, MX",
+    venue: "Recinto demo",
+    date: "2026-04-02",
+    dateLabel: "02 Abr 2026",
+    time: "9:00 PM",
+    heroTag: "Demo secundaria",
+    status: "Disponible",
+    startingPrice: 450,
+    summary: "Evento adicional para mostrar cartelera y navegación.",
+    description: "Se conserva como apoyo visual para la lista de eventos.",
+    sections: [
+      { id:"GEN", shortCode:"GEN", name:"General", price:450, colorClass:"bal", description:"Acceso general", rows: rowsFromSpec([["A",10],["B",12],["C",12]]) }
+    ],
+    demoSoldSeats: [],
+    demoHeldSeats: []
+  };
+
+  window.TICKETORIDE_MOCK_DATA = {
+    venueReference: {
+      name: "Teatro de la Paz, S.L.P."
     },
-    {
-      "id": "EVT-002",
-      "slug": "electro-wave-tour",
-      "title": "Electro Wave Tour",
-      "city": "Monterrey, MX",
-      "venue": "Foro Delta",
-      "date": "2026-04-15",
-      "dateLabel": "15 Abr 2026",
-      "time": "9:00 PM",
-      "category": "Concierto",
-      "startingPrice": 590,
-      "status": "Venta activa",
-      "heroTag": "Concierto",
-      "summary": "Diseño nocturno, energético y orientado a conversión para conciertos con alta rotación de tickets.",
-      "description": "Electro Wave Tour muestra una estructura ideal para eventos de ticket promedio medio, con categorías claras y CTA fuertes.",
-      "coverClass": "cover-electro-wave",
-      "zones": [
-        {
-          "id": "general",
-          "name": "General",
-          "price": 590,
-          "desc": "Acceso general."
-        },
-        {
-          "id": "preferente",
-          "name": "Preferente",
-          "price": 920,
-          "desc": "Zona con mejor visibilidad."
-        },
-        {
-          "id": "vip",
-          "name": "VIP",
-          "price": 1490,
-          "desc": "Acceso premium y beneficios adicionales."
-        }
-      ],
-      "faqs": [
-        [
-          "¿Hay límite por compra?",
-          "Sí, el demo permite hasta 8 boletos por orden."
-        ],
-        [
-          "¿Se pueden aplicar cupones?",
-          "Sí, el checkout incluye lógica base para cupones promocionales."
-        ],
-        [
-          "¿Se puede cambiar por asientos numerados?",
-          "Sí, la sección de zonas puede evolucionar a mapa de asientos."
-        ]
-      ]
-    },
-    {
-      "id": "EVT-003",
-      "slug": "sunset-beats",
-      "title": "Sunset Beats",
-      "city": "Guadalajara, MX",
-      "venue": "Terraza Nova",
-      "date": "2026-05-28",
-      "dateLabel": "28 May 2026",
-      "time": "6:00 PM",
-      "category": "Festival",
-      "startingPrice": 720,
-      "status": "Preventa",
-      "heroTag": "Festival",
-      "summary": "Tarjetas premium para que el usuario entienda rápido fecha, sede y precio desde la primera impresión.",
-      "description": "Sunset Beats funciona como ejemplo de boletera visual con enfoque aspiracional y escalable.",
-      "coverClass": "cover-sunset-beats",
-      "zones": [
-        {
-          "id": "general",
-          "name": "General",
-          "price": 720,
-          "desc": "Acceso sunset."
-        },
-        {
-          "id": "preferente",
-          "name": "Preferente",
-          "price": 980,
-          "desc": "Vista destacada."
-        },
-        {
-          "id": "vip",
-          "name": "VIP",
-          "price": 1650,
-          "desc": "Zona exclusiva con experiencia premium."
-        }
-      ],
-      "faqs": [
-        [
-          "¿Puedo ver mis boletos después?",
-          "Sí, en la sección Mis boletos."
-        ],
-        [
-          "¿Hay scanner?",
-          "Sí, el paquete incluye una vista de scanner/check-in."
-        ],
-        [
-          "¿Se puede conectar con WooCommerce?",
-          "Sí, como producto simple, variable o por zona."
-        ]
-      ]
-    }
-  ]
-};
+    events: [theatreEvent, supportEvent]
+  };
+})();

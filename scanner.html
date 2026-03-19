@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ticketoride | Acceso</title>
-  <meta name="description" content="Validación de boletos y control de acceso en Ticketoride." />
+  <meta name="description" content="Valida boletos demo en puerta." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-page="scanner">
@@ -14,239 +14,75 @@
         <img src="assets/img/logo-ticketoride.png" alt="Logo Ticketoride" class="brand-logo" />
         <div class="brand-copy">
           <span class="brand-name">Ticketoride</span>
-          <span class="brand-tag">Boletos para vivir la experiencia</span>
+          <span class="brand-tag">Control de acceso</span>
         </div>
       </a>
-
       <nav class="menu">
         <a href="index.html">Inicio</a>
         <a href="eventos.html">Eventos</a>
         <a href="mis-boletos.html">Mis boletos</a>
-        <a href="scanner.html">Acceso</a>
+        <a href="scanner.html" class="is-active">Acceso</a>
         <a href="panel.html">Panel</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="section alt" style="padding-top:48px">
-      <div class="container">
-        <div class="section-head left">
-          <span class="section-kicker red">Control de acceso</span>
-          <h2>Validación rápida de boletos en puerta</h2>
-          <p>
-            Una vista pensada para agilizar el ingreso, reducir errores y dar una experiencia
-            más ordenada al momento del acceso.
-          </p>
-        </div>
-
-        <div class="scan-grid">
-          <section class="scan-box">
-            <h3 style="margin-top:0;">Validar boleto</h3>
-            <p class="muted" style="margin-bottom:18px;">
-              Ingresa un código manual o selecciona un boleto para simular la validación.
-            </p>
-
-            <div class="scan-row">
-              <label>
-                <span>Código manual</span>
-                <input id="scannerInput" type="text" placeholder="Ejemplo: TTR-2026-000184" />
-              </label>
-
-              <label>
-                <span>Boletos disponibles</span>
-                <select id="scannerSelect">
-                  <option value="">Selecciona un boleto</option>
-                  <option value="TTR-2026-000184">TTR-2026-000184 · Festival Live Night 2026</option>
-                  <option value="TTR-2026-000231">TTR-2026-000231 · Electro Wave Tour</option>
-                  <option value="TTR-2026-000305">TTR-2026-000305 · Sunset Beats</option>
-                </select>
-              </label>
-
-              <button id="scannerValidate" class="btn btn-primary">Validar acceso</button>
-            </div>
-
-            <div id="scannerResult" style="margin-top:22px;">
-              <div class="scan-result">
-                <h3 style="margin-top:0;">Esperando validación</h3>
-                <p>Selecciona o captura un código para simular el acceso del asistente.</p>
-              </div>
-            </div>
-          </section>
-
-          <aside class="promo-card">
-            <h3>Operación más ágil en puerta</h3>
-            <p class="muted" style="margin-bottom:16px;">
-              Una validación clara ayuda a reducir filas, evitar confusiones y mejorar la experiencia de ingreso.
-            </p>
-
-            <ul class="muted" style="padding-left:18px; margin:0 0 20px;">
-              <li>Validación rápida de boletos</li>
-              <li>Confirmación visual del acceso</li>
-              <li>Control de entradas registradas</li>
-              <li>Mejor orden operativo</li>
-            </ul>
-
-            <div class="feature-card" style="padding:18px;">
-              <strong style="display:block;margin-bottom:8px;">Estado actual</strong>
-              <p style="margin:0;color:var(--muted);">
-                El sistema está listo para mostrar acceso aprobado, rechazado o ya utilizado en una sola vista.
-              </p>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container split-grid">
+  <main class="section alt" style="padding-top:42px">
+    <div class="container">
+      <div class="page-head">
         <div>
-          <div class="section-head left" style="margin-bottom:24px;">
-            <span class="section-kicker red">Validaciones recientes</span>
-            <h2>Últimos accesos registrados</h2>
-            <p>
-              Una vista rápida para revisar el flujo de ingreso y mantener mejor control durante el evento.
-            </p>
-          </div>
-
-          <div class="glass-stack">
-            <article class="feature-card" style="padding:22px;">
-              <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;">
-                <div>
-                  <strong>TTR-2026-000184</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">Festival Live Night 2026 · General</p>
-                </div>
-                <div style="text-align:right;">
-                  <strong style="color:#16a34a;">Acceso aprobado</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">7:42 PM</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="feature-card" style="padding:22px;">
-              <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;">
-                <div>
-                  <strong>TTR-2026-000231</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">Electro Wave Tour · Preferente</p>
-                </div>
-                <div style="text-align:right;">
-                  <strong style="color:#16a34a;">Acceso aprobado</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">7:45 PM</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="feature-card" style="padding:22px;">
-              <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;">
-                <div>
-                  <strong>TTR-2026-000305</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">Sunset Beats · VIP</p>
-                </div>
-                <div style="text-align:right;">
-                  <strong style="color:#ca8a04;">Pendiente</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">En revisión</p>
-                </div>
-              </div>
-            </article>
-
-            <article class="feature-card" style="padding:22px;">
-              <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;">
-                <div>
-                  <strong>TTR-2026-000118</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">Festival Live Night 2026 · General</p>
-                </div>
-                <div style="text-align:right;">
-                  <strong style="color:#dc2626;">Ya utilizado</strong>
-                  <p style="margin:6px 0 0;color:var(--muted);">7:31 PM</p>
-                </div>
-              </div>
-            </article>
-          </div>
+          <span class="kicker">Scanner demo</span>
+          <h1 style="font-size:2.4rem;margin-bottom:10px;">Validación manual de boletos</h1>
+          <p>Esta vista queda lista para simular acceso usando el folio generado en el checkout.</p>
         </div>
+        <button id="resetDemoData" class="btn btn-ghost">Reiniciar demo</button>
+      </div>
 
-        <aside>
-          <div class="feature-card" style="padding:28px;margin-bottom:18px;">
-            <span class="section-kicker red" style="margin-bottom:14px;">Resumen rápido</span>
-            <h3 style="margin-top:0;">Estado del acceso</h3>
-
-            <div style="display:grid;gap:14px;">
-              <div style="display:flex;justify-content:space-between;gap:12px;">
-                <span>Boletos validados</span>
-                <strong>936</strong>
-              </div>
-              <div style="display:flex;justify-content:space-between;gap:12px;">
-                <span>Pendientes</span>
-                <strong>348</strong>
-              </div>
-              <div style="display:flex;justify-content:space-between;gap:12px;">
-                <span>Duplicados detectados</span>
-                <strong>12</strong>
-              </div>
-              <div style="display:flex;justify-content:space-between;gap:12px;">
-                <span>Rechazados</span>
-                <strong>4</strong>
-              </div>
+      <div class="scan-layout">
+        <section class="scan-card">
+          <h3>Validar boleto</h3>
+          <p>Captura el folio o selecciónalo desde la lista de boletos emitidos.</p>
+          <div class="scan-form">
+            <div class="field-wrap">
+              <span>Folio</span>
+              <input id="scannerInput" class="field" type="text" placeholder="Ejemplo: TDP-123456-01" />
             </div>
-          </div>
-
-          <div class="feature-card" style="padding:28px;">
-            <h3 style="margin-top:0;">Acciones rápidas</h3>
-            <div class="row-actions" style="display:flex;gap:12px;flex-wrap:wrap;">
-              <a href="panel.html" class="btn btn-primary">Ver panel</a>
-              <a href="mis-boletos.html" class="btn btn-secondary">Ver boletos</a>
+            <div class="field-wrap">
+              <span>Boletos emitidos</span>
+              <select id="scannerSelect" class="field"></select>
             </div>
+            <button id="scannerValidate" class="btn btn-primary">Validar acceso</button>
           </div>
+          <div id="scannerResult" class="scan-result">
+            <strong>Esperando validación</strong>
+            <p style="margin-top:8px;">Selecciona o captura un folio para revisar el estatus del boleto.</p>
+          </div>
+        </section>
+
+        <aside class="summary-card">
+          <span class="kicker">Estado del acceso</span>
+          <div class="summary-list" id="scannerStats"></div>
+          <hr class="soft" />
+          <strong style="display:block;margin-bottom:10px;">Tips de simulación</strong>
+          <p class="muted">1. Compra un boleto en el checkout.</p>
+          <p class="muted">2. Copia el folio o selecciónalo aquí.</p>
+          <p class="muted">3. La primera lectura aprueba acceso.</p>
+          <p class="muted">4. La segunda lectura marca duplicado o ya utilizado.</p>
         </aside>
       </div>
-    </section>
 
-    <section class="section dark">
-      <div class="container">
-        <div class="section-head left">
-          <span class="section-kicker">Ingreso eficiente</span>
-          <h2>Una validación clara mejora toda la experiencia</h2>
-          <p>
-            Desde el acceso hasta el control operativo, una buena interfaz ayuda a trabajar
-            más rápido y a transmitir una plataforma más sólida y profesional.
-          </p>
-        </div>
-
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Menos filas</h3>
-            <p>Una validación más ágil ayuda a reducir tiempos de espera en la entrada.</p>
-          </article>
-
-          <article class="feature-card">
-            <h3>Mayor control</h3>
-            <p>Permite revisar accesos, validar estatus y detectar incidencias con más orden.</p>
-          </article>
-
-          <article class="feature-card">
-            <h3>Mejor imagen operativa</h3>
-            <p>Una vista profesional en acceso refuerza la confianza en toda la plataforma.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="cta-band">
-          <div>
-            <h2 style="margin:0 0 10px;">Acceso rápido, control más claro</h2>
-            <p style="margin:0;color:var(--muted);max-width:760px;">
-              Valida boletos, revisa ingresos y mantén el control operativo del evento en una sola vista.
-            </p>
+      <section class="section" style="padding:26px 0 0;">
+        <div class="container" style="padding:0">
+          <div class="page-head" style="margin-bottom:14px;">
+            <div>
+              <span class="kicker">Lecturas recientes</span>
+              <h1 style="font-size:1.7rem;margin:0;">Historial de validaciones</h1>
+            </div>
           </div>
-
-          <div class="row-actions">
-            <a class="btn btn-primary" href="panel.html">Ir al panel</a>
-            <a class="btn btn-secondary" href="index.html">Volver al inicio</a>
-          </div>
+          <div id="recentScansWrap" class="tickets-grid"></div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
   <footer class="footer">
