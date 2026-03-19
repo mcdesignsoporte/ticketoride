@@ -406,7 +406,7 @@ hr.soft{
 }
 .layout-canvas-pro{
   position:relative;
-  min-height:720px;
+  min-height:760px;
   overflow:hidden;
   border-radius:30px;
   border:1px solid rgba(148,163,184,.28);
@@ -416,11 +416,12 @@ hr.soft{
     linear-gradient(180deg,#f5f7fb 0%,#eceff5 58%,#e6eaf1 100%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.76);
 }
-.layout-view-pro{display:none;min-height:720px;height:100%}
+.layout-view-pro{display:none;min-height:760px;height:100%}
 .layout-view-pro.is-visible{display:block}
-.overview-map,.detail-viewport-pro{position:relative;height:720px}
+.overview-map,.detail-viewport-pro{position:relative;height:760px}
 .overview-svg{width:100%;height:100%;display:block}
 .overview-floor ellipse{fill:rgba(15,23,42,.05);filter:blur(2px)}
+.overview-svg{overflow:visible}
 .overview-region{cursor:pointer;transition:transform .18s ease, opacity .18s ease}
 .overview-region:hover{transform:translateY(-3px)}
 .overview-region .overview-arc-fill,.overview-stage path,.overview-palcos path,.overview-mini-dots circle,.overview-label-badge rect{transition:fill .18s ease, stroke .18s ease, opacity .18s ease, filter .18s ease}
@@ -620,3 +621,10 @@ hr.soft{
   .detail-stage-pro span{font-size:.95rem;letter-spacing:.14em}
   .hover-meta{grid-template-columns:1fr}
 }
+
+.detail-palcos path{fill:rgba(212,218,230,.92);stroke:#f8fafc;stroke-width:4;filter:drop-shadow(0 8px 12px rgba(15,23,42,.08));}
+.guide-svg .detail-palcos path{opacity:.9}
+.guide-svg .section-fill.pb{fill:rgba(249,115,22,.1)}
+.guide-svg .section-fill.mez{fill:rgba(139,92,246,.1)}
+.guide-svg .section-fill.bal{fill:rgba(37,99,235,.1)}
+.row-tag{min-width:38px;height:38px;display:grid;place-items:center;border-radius:999px;background:#fff;border:1px solid rgba(203,213,225,.95);box-shadow:0 6px 12px rgba(15,23,42,.06);font-weight:900;color:#334155}

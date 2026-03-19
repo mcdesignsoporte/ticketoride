@@ -22,7 +22,7 @@
     sections: [
       {
         id: "PB",
-        shortCode: "P",
+        shortCode: "PB",
         name: "Planta Baja",
         price: 1000,
         colorClass: "pb",
